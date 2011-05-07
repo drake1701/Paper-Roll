@@ -1,6 +1,8 @@
 <?php
-/*
- *  @author  Dennis Rogers
+/**
+ * @package		PaperRoll
+ * @author		Dennis Rogers
+ * @address		www.drogers.net
  */
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap

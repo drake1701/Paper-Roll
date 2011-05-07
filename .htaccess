@@ -1,7 +1,8 @@
-#test comment
-# another one
-Order Deny,Allow
-Deny From All
+RewriteEngine On
+RewriteBase /public/
 
-Option -Index
-
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ public/index.php [NC,L]

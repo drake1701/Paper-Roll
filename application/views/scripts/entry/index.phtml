@@ -1,0 +1,23 @@
+<?php
+/**
+ * @package		PaperRoll
+ * @author		Dennis Rogers
+ * @address		www.drogers.net
+ */
+?>
+
+<p><a href="<?php echo $this->url(
+    array(
+        'controller' => 'entry',
+        'action'     => 'view'
+    ),
+    'default',
+    true) ?>">View</a></p>
+ 
+Entries: <br />
+<dl>
+    <?php foreach ($this->entries as $entry): ?>
+    <dt><?php echo $this->escape($entry->getTitle()) ?></dt>
+    <dd><?php echo $this->escape($entry->getContent()) ?></dd>
+    <?php endforeach ?>
+</dl>
