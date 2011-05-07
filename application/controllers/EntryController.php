@@ -9,7 +9,22 @@ class EntryController extends Zend_Controller_Action
 {
     public function indexAction()
     {
+        $this->_redirect('entry/list');
+    }
+
+    public function listAction()
+    {
         $entry = new PaperRoll_Model_Entry();
         $this->view->entries = $entry->fetchAll();
+    }
+    
+    public function viewAction()
+    {
+    	$entry = new PaperRoll_Model_Entry();
+    	if($this->getRequest()->getParam('e') == null){
+    		$this->_redirect('entry');
+    	}
+    	$entry->load((int)$this->getRequest()->getParam('e'));
+    	$this->view->entry = $entry;
     }
 }

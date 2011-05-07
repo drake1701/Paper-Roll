@@ -1,0 +1,8 @@
+<?php $entry = $this->entry ?>
+<h2><?php echo $entry->getTitle() ?></h2>
+<?php foreach($entry->getImages() as $type => $path): ?>
+<img src="<?php echo $path?>" alt="<?php echo $entry->getTitle() ?>" title="<?php echo $entry->getTitle() ?>"/><br/>
+<?php endforeach; ?>
+
+<pre>
+<?php var_dump($this->entry) ?>
