@@ -9,7 +9,9 @@
 Entries: <br />
 <dl>
     <?php foreach ($this->entries as $entry): ?>
-    <dt><a href="<?php echo $entry->getUrl()?>"><?php echo $this->escape($entry->getTitle()) ?></a></dt>
-    <dd><?php echo $this->escape($entry->getContent()) ?></dd>
+	    <?php if($entry->canShow()): ?>
+	    <dt><a href="/<?php echo $entry->getUrlPath()?>"><?php echo $this->escape($entry->getTitle()) ?></a></dt>
+	    <dd><img src="<?php echo $entry->getThumb() ?>" alt="<?php echo $entry->getTitle() ?>"/></dd>
+	    <?php endif; ?>
     <?php endforeach ?>
 </dl>

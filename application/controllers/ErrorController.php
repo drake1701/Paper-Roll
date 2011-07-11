@@ -12,7 +12,8 @@ class ErrorController extends Zend_Controller_Action
             return;
         }
         
-        if($rewrite = $this->fetchRewrite($this->getRequest()->getRequestUri())){
+        $rewrite = $this->fetchRewrite($this->getRequest()->getRequestUri());
+        if($rewrite){
         	$this->_forward($rewrite['action'], $rewrite['controller'], $rewrite['module'], $rewrite['params']);
         }
         
@@ -57,7 +58,26 @@ class ErrorController extends Zend_Controller_Action
     
     public function fetchRewrite($path)
     {
-    	return array('action' => 'view', 'controller' => 'entry', 'module' => null, 'params' => array('e' => 2));
+    	// handle paths with date "folders"
+    	$path_parts = explode("/", $path);
+    	if(count($path_parts) > 2 AND strpos($path, ".html")){
+    		// current db has no paths where final file is identical, so send old requests to simpler paths with 301s
+    		$this->_redirect(array_pop($path_parts), array('code' => 301));
+    	}
+    	$key = array_pop($path_parts);
+    	    	
+    	$entry = new PaperRoll_Model_Entry();
+    	$table = $entry->getMapper()->getDbTable();
+    	$row = $table->fetchRow(
+    		$table->select()
+    			->where('url_path = ?', $key)	
+    	);
+    	if($row->id > 0){
+	    	return array('action' => 'view', 'controller' => 'entry', 'module' => null, 'params' => array('e' => $row->id));    	
+    	} else {
+    		return false;
+    	}
+    	
     }
 
 
