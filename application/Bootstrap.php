@@ -7,11 +7,30 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+
 	protected function _initDoctype()
 	{
 		$this->bootstrap('view');
         	$view = $this->getResource('view');
         	$view->doctype('XHTML1_STRICT');
+	}
+	
+	public function log($message)
+	{	
+		$stream = fopen(APPLICATION_PATH . '/../logs/system.log', 'a', false);
+		if (! $stream) {
+		    throw new Exception('Failed to open stream');
+		}
+		
+		$writer = new Zend_Log_Writer_Stream($stream);
+		$logger = new Zend_Log($writer);
+
+	    if (is_array($message) || is_object($message)) {
+	        $message = print_r($message, true);
+	    }
+            		
+    	$logger->info($message);
+	
 	}
 }
 

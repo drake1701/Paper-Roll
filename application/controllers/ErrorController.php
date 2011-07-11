@@ -12,6 +12,10 @@ class ErrorController extends Zend_Controller_Action
             return;
         }
         
+        if($rewrite = $this->fetchRewrite($this->getRequest()->getRequestUri())){
+        	$this->_forward($rewrite['action'], $rewrite['controller'], $rewrite['module'], $rewrite['params']);
+        }
+        
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
@@ -49,6 +53,11 @@ class ErrorController extends Zend_Controller_Action
         }
         $log = $bootstrap->getResource('Log');
         return $log;
+    }
+    
+    public function fetchRewrite($path)
+    {
+    	return array('action' => 'view', 'controller' => 'entry', 'module' => null, 'params' => array('e' => 2));
     }
 
 
