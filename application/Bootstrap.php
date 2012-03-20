@@ -17,6 +17,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	
 	public function log($message)
 	{	
+		if(!is_dir(APPLICATION_PATH . '/../logs/')){
+			mkdir(APPLICATION_PATH . '/../logs/');			
+		}
 		$stream = fopen(APPLICATION_PATH . '/../logs/system.log', 'a', false);
 		if (! $stream) {
 		    throw new Exception('Failed to open stream');
