@@ -10,6 +10,9 @@ class AdminController extends Zend_Controller_Action
 
     public function preDispatch()
     {
+		$config = new PaperRoll_Model_Config();
+		Bootstrap::log($config->getByCode('admin_user'));
+		die();
         if (Zend_Auth::getInstance()->hasIdentity()) {
             // If the user is logged in, we don't want to show the login form;
             // however, the logout action should still be available
@@ -63,6 +66,7 @@ class AdminController extends Zend_Controller_Action
         // Get our authentication adapter and check credentials
         $adapter = $this->getAuthAdapter($form->getValues());
         $auth    = Zend_Auth::getInstance();
+		$auth->
         $result  = $auth->authenticate($adapter);
         Bootstrap::log($result);
         if (!$result->isValid()) {
