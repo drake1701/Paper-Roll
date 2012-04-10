@@ -16,7 +16,7 @@ class PaperRoll_Model_Image extends PaperRoll_Model_Core_Object
 		$temp = array();
 		foreach($images as $key => $image){
 			$image = $this->load($image['id']);
-			$temp[$image->getKind()->getPath()] = $image->getPath();
+			$temp[$image->getKind()->getPath()] = $this->_url . $image->getKind()->getPath() . '/' . $image->getPath();
 		}
 		return $temp;
 	}

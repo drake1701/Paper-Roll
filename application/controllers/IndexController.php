@@ -10,7 +10,8 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	
+		$entry = new PaperRoll_Model_Entry();
+    	$this->view->entries = $entry->getLatest(5);
     }
 
 

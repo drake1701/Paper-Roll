@@ -56,13 +56,18 @@ abstract class PaperRoll_Model_Core_Mapper
     public function fetchAll()
     {
         $resultSet = $this->getDbTable()->fetchAll();
-        $entries   = array();
+        return $this->_loadEach($resultSet);
+    }
+
+	protected function _loadEach($resultSet)
+	{
+		$entries   = array();
         foreach ($resultSet as $row) {
             $entry = new $this->_model;
             $entry->load($row->id);
             $entries[] = $entry;
         }
         return $entries;
-    }
+	}
     
 }

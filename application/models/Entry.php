@@ -22,6 +22,24 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 		$this->setThumb($images['thumb']);
 		return $this;		
 	}
+
+	public function getImageUrl($type){
+		$images = $this->getImages();
+		if(isset($images[$type])){
+			return $images[$type];
+		}
+		return '';
+	}
+
+	public function getVisible()
+	{
+		return $this->getMapper()->getVisible();
+	}
+
+	public function getLatest($count = 1)
+	{
+		return $this->getMapper()->getLatest($count);
+	}
 	
 	public function canShow(){
 		if(!$this->load($this->getId())){

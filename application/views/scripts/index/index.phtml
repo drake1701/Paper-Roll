@@ -1,3 +1,19 @@
+<?php
+/**
+ * @package		PaperRoll
+ * @author		Dennis Rogers
+ * @address		www.drogers.net
+ */
+$date = new PaperRoll_View_Helper_Date();
+?>
 <h1>Home Page</h1>
 
-<a href="<?php echo $this->url(array('controller'=>'entry','action'=>'index'), 'default') ?>">View Entries</a>
+<?php foreach ($this->entries as $entry) : ?>
+	<div class="entry">
+		<a href="/<?php echo $entry->getUrlPath()?>"><img src="<?php echo $entry->getImageUrl('preview') ?>" alt="<?php echo $entry->getTitle() ?>" /></a>
+		<a href="/<?php echo $entry->getUrlPath()?>"><h2><?php echo $entry->getTitle() ?></h2></a>
+		<p class="date">Posted on: <?php echo $date->format($entry->getPublishedAt()) ?></p>
+	</div>
+<?php endforeach; ?>
+
+<a href="<?php echo $this->url(array('controller'=>'entry','action'=>'index'), 'default') ?>">View All</a>

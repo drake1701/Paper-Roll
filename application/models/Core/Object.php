@@ -78,5 +78,9 @@ abstract class PaperRoll_Model_Core_Object
 		$class = get_class($this)."_Mapper";
 		return new $class;
 	}
+
+	public function getResource(){
+		return $this->getMapper()->getDbTable();
+	}
     
 }
