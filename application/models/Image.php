@@ -8,6 +8,8 @@
 class PaperRoll_Model_Image extends PaperRoll_Model_Core_Object
 {
 
+	protected $_url = "/public/gallery/";
+
 	public function getEntryImages($id)
 	{
 		$images = $this->getMapper()->getDbTable()->select()->where("entry_id = $id")->query()->fetchAll();
@@ -25,8 +27,18 @@ class PaperRoll_Model_Image extends PaperRoll_Model_Core_Object
 		$kind = new PaperRoll_Model_ImageKind();		
 		$kind = $kind->load($this->getKind());
 		$this->setKind($kind);
-		$this->setPath("/public/gallery/" . $kind->getPath() . "/" . $this->getPath());
+		$this->setUrl($this->_url . $kind->getPath() . "/" . $this->getPath());
 		return $this;
+	}
+
+	public function getThumbImages()
+	{
+		$images = $this->getMapper()->getDbTable()->fetchAll($this->getMapper()->getDbTable()->select()->group('path'));
+		$files = array();
+		foreach($images as $image){
+			$files[] = $image['path'];
+		}
+		return $files;
 	}
 
 }

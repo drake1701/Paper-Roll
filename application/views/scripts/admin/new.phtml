@@ -1,0 +1,18 @@
+<?php
+/**
+ * @package	PaperRoll
+ * @author 	dennis
+ * @site 	www.drogers.net
+ */
+
+$helper = new PaperRoll_View_Helper_Name();
+
+ ?>
+
+<div style="float:right;width:610px;">
+	<?php foreach ($this->images as $image) : ?>
+		<a href="<?php echo $this->url(array('controller'=>'admin', 'action'=>'newprocess', 'image' => $image)) ?>">
+			<img src="/public/gallery/thumb/<?php echo $image ?>" alt="<?php echo $helper->fileToName($image); ?>" />
+		</a>
+	<?php endforeach; ?>
+</div>

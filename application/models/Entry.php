@@ -27,7 +27,6 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 		if(!$this->load($this->getId())){
 			return false;
 		}
-		
 		return true;
 	}
 

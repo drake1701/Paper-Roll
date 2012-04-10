@@ -1,9 +1,11 @@
 <?php
 /**
- * @package		PaperRoll
- * @author		Dennis Rogers
- * @address		www.drogers.net
+ * @package	PaperRoll
+ * @author 	dennis
+ * @site 	www.drogers.net
  */
-?>
-<h2>Please Login</h2>
-<?php echo $this->form ?>
+Bootstrap::log(get_class($this));
+ ?>
+<ul>
+	<li><a href="<?php echo $this->url(array('controller' => "admin",'action' => "new")); ?>">Check for New</a></li>
+</ul>

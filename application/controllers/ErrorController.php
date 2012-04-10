@@ -72,7 +72,7 @@ class ErrorController extends Zend_Controller_Action
     		$table->select()
     			->where('url_path = ?', $key)	
     	);
-    	if($row->id > 0){
+    	if($row && $row->id > 0){
 	    	return array('action' => 'view', 'controller' => 'entry', 'module' => null, 'params' => array('e' => $row->id));    	
     	} else {
     		return false;

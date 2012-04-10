@@ -11,7 +11,7 @@ Entries: <br />
     <?php foreach ($this->entries as $entry): ?>
 	    <?php if($entry->canShow()): ?>
 	    <dt><a href="/<?php echo $entry->getUrlPath()?>"><?php echo $this->escape($entry->getTitle()) ?></a></dt>
-	    <dd><img src="<?php echo $entry->getThumb() ?>" alt="<?php echo $entry->getTitle() ?>"/></dd>
+<!--	    <dd><img src="--><?php //echo $entry->getThumb() ?><!--" alt="--><?php //echo $entry->getTitle() ?><!--"/></dd>-->
 	    <?php endif; ?>
     <?php endforeach ?>
 </dl>

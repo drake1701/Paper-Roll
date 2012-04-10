@@ -15,7 +15,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         	$view->doctype('XHTML1_STRICT');
 	}
 	
-	public function log($message)
+	static public function log($message)
 	{	
 		if(!is_dir(APPLICATION_PATH . '/../logs/')){
 			mkdir(APPLICATION_PATH . '/../logs/');			

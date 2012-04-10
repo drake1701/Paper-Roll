@@ -10,7 +10,10 @@ abstract class PaperRoll_Model_Core_Mapper
 
     protected $_dbTable;
     protected $_model;
- 
+
+	/*
+	 * @return Zend_Db_Table_Abstract
+	 */
     public function setDbTable($dbTable)
     {
         if (is_string($dbTable)) {
