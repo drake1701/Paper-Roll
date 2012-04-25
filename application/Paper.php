@@ -5,7 +5,7 @@
  * @address		www.drogers.net
  */
 
-class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
+class Paper extends Zend_Application_Bootstrap_Bootstrap
 {
 
 	protected function _initDoctype()
@@ -33,7 +33,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	    }
             		
     	$logger->info($message);
-	
+	}
+
+	static public function helper($name)
+	{
+		$helper = "PaperRoll_View_Helper_$name";
+		return new $helper;
 	}
 }
 

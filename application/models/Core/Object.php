@@ -23,6 +23,11 @@ abstract class PaperRoll_Model_Core_Object
     	$this->getMapper()->load($id, $this);
     	return $this;
     }
+
+    public function save(){
+    	$this->getMapper()->save($this);
+    	return $this;
+    }
  
     public function __call($method, $args)
     {
@@ -65,9 +70,13 @@ abstract class PaperRoll_Model_Core_Object
         return $this;
     }
     
-    public function getData($key)
+    public function getData($key = null)
     {
-        return isset($this->_data[$key]) ? $this->_data[$key] : null;
+        if($key == null) {
+			return $this->_data;
+		} else {
+			return isset($this->_data[$key]) ? $this->_data[$key] : null;
+		}
     }
     
 	public function fetchAll(){
@@ -79,6 +88,9 @@ abstract class PaperRoll_Model_Core_Object
 		return new $class;
 	}
 
+	/*
+	 * @returns Zend_Db_Table_Abstract
+	 */
 	public function getResource(){
 		return $this->getMapper()->getDbTable();
 	}

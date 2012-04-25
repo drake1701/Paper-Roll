@@ -17,7 +17,7 @@ class PaperRoll_Model_Entry_Mapper extends PaperRoll_Model_Core_Mapper
 	public function getVisible()
 	{
 		$resultSet = $this->getDbTable()->fetchAll($this->getDbTable()->select()->where("`queue` IS NULL"));
-		return $this->_loadEach($resultSet);
+		return $this->loadEach($resultSet);
 	}
 
 	public function getLatest($count)
@@ -28,6 +28,6 @@ class PaperRoll_Model_Entry_Mapper extends PaperRoll_Model_Core_Mapper
 				->order("published_at DESC")
 				->limit($count)
 		);
-		return $this->_loadEach($resultSet);
+		return $this->loadEach($resultSet);
 	}
 }

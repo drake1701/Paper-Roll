@@ -53,11 +53,23 @@ class AdminController extends Zend_Controller_Action
 
 	public function editAction()
 	{
-		$form = new PaperRoll_View_Helper_EditForm(array(
-			"action" => "/admin/save",
-			"method" => "post"
-		));
-		$this->view->form = $form;
+		if($this->getRequest()->getParam('id')){
+			$entry = new PaperRoll_Model_Entry();
+			$entry->load($this->getRequest()->getParam('id'));
+			$this->view->entry = $entry;
+		}
+	}
+
+	public function saveAction()
+	{
+		$data = $this->getRequest()->getPost();
+		$entry = new PaperRoll_Model_Entry();
+		if($data['id'])
+			$entry->load($data['id']);
+
+		$entry->setData($data);
+		$entry->save();
+        return $this->_helper->redirector->gotoSimple('edit', 'admin', null, array("id" => $data['id']));
 	}
 
 	public function getAuthAdapter(array $params)

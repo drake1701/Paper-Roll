@@ -12,11 +12,16 @@ class PaperRoll_Model_Image extends PaperRoll_Model_Core_Object
 
 	public function getEntryImages($id)
 	{
-		$images = $this->getMapper()->getDbTable()->select()->where("entry_id = $id")->query()->fetchAll();
+		$db = $this->getResource();
+		$images = $db->fetchAll($db->select()
+			->from("image")
+			->join(array("k" => "image_kind"), "image.kind = k.id", null)
+			->where("entry_id = $id")
+			->order("k.position ASC"));
+		$images = $this->getMapper()->loadEach($images);
 		$temp = array();
-		foreach($images as $key => $image){
-			$image = $this->load($image['id']);
-			$temp[$image->getKind()->getPath()] = $this->_url . $image->getKind()->getPath() . '/' . $image->getPath();
+		foreach($images as $image){
+			$temp[$image->getKind()->getPath()] = $image;
 		}
 		return $temp;
 	}

@@ -11,9 +11,6 @@ abstract class PaperRoll_Model_Core_Mapper
     protected $_dbTable;
     protected $_model;
 
-	/*
-	 * @return Zend_Db_Table_Abstract
-	 */
     public function setDbTable($dbTable)
     {
         if (is_string($dbTable)) {
@@ -25,21 +22,36 @@ abstract class PaperRoll_Model_Core_Mapper
         $this->_dbTable = $dbTable;
         return $this;
     }
- 
+
+	/*
+	 * @returns Zend_Db_Table
+	 */
     public function getDbTable()
     {
         return $this->_dbTable;
     }
  
     public function save(PaperRoll_Model_Core_Object $object)
-    { 
-        if (null === ($id = $entry->getId())) {
-            unset($data['id']);
-            $data['updated_at'] = $data['created_at'] = date('Y-m-d H:i:s');
-            $this->getDbTable()->insert($data);
+    {
+		$data = $object->getData();
+
+		$data['modified_at'] = date('Y-m-d H:i:s');
+        if (null === ($id = $object->getId())) {
+            $data['modified_at'] = $data['created_at'];
+        }
+
+		$columns = $this->getDbTable()->fetchNew()->toArray();
+		foreach($columns as $key => $value){
+			if(isset($data[$key])) {
+				$columns[$key] = $data[$key];
+			} else {
+				unset($columns[$key]);
+			}
+		}
+        if (null === ($id = $object->getId())) {
+            $this->getDbTable()->insert($columns);
         } else {
-        	$data['updated_at'] = date('Y-m-d H:i:s');
-            $this->getDbTable()->update($data, array('id = ?' => $id));
+            $this->getDbTable()->update($columns, array('id = ?' => $id));
         }
     }
  
@@ -56,10 +68,10 @@ abstract class PaperRoll_Model_Core_Mapper
     public function fetchAll()
     {
         $resultSet = $this->getDbTable()->fetchAll();
-        return $this->_loadEach($resultSet);
+        return $this->loadEach($resultSet);
     }
 
-	protected function _loadEach($resultSet)
+	public function loadEach($resultSet)
 	{
 		$entries   = array();
         foreach ($resultSet as $row) {

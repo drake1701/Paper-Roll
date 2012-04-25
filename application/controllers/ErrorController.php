@@ -60,6 +60,11 @@ class ErrorController extends Zend_Controller_Action
     {
     	// handle paths with date "folders"
     	$path_parts = explode("/", $path);
+
+		if(count($path_parts) > 2 AND $path_parts[1] == 'tag'){
+			return array('action' => 'list', 'controller' => 'tag', 'module' => null, 'params' => array('tag' => $path_parts[2]));
+		}
+
     	if(count($path_parts) > 2 AND strpos($path, ".html")){
     		// current db has no paths where final file is identical, so send old requests to simpler paths with 301s
     		$this->_redirect(array_pop($path_parts), array('code' => 301));

@@ -1,0 +1,29 @@
+<?php
+/**
+ * @package		PaperRoll
+ * @author		Dennis Rogers
+ * @address		www.drogers.net
+ */
+
+$columnCount = 3;
+$i = 0;
+$totalEntries = count($this->tags);
+?>
+
+<?php foreach ($this->tags as $tag): ?>
+	<?php $entry = new PaperRoll_Model_Entry(); ?>
+	<?php $entry->load($tag['entry_id']); ?>
+	<?php if($entry->canShow()): ?>
+		<?php if ($i % $columnCount == 0) : ?>
+			<ul class="entry-grid">
+		<?php endif; ?>
+				<li class="entry-item">
+					<p class="entry-title"><a href="/tag/<?php echo $tag['slug']?>"><?php echo $this->escape($tag['title']) ?></a></p>
+					<div class="entry-image"><a href="/tag/<?php echo $tag['slug']?>"><img src="<?php echo $entry->getImageUrl('thumb') ?>" alt="<?php echo $tag['title'] ?>"/></a></div>
+					<p class="entry-date"><?php echo $tag['count'] . " entr" . ($tag['count'] > 1 ? "ies" : "y") ?></p>
+				</li>
+		<?php if (++$i % $columnCount == 0 || $i >= $totalEntries) : ?>
+			</ul>
+		<?php endif; ?>
+	<?php endif; ?>
+<?php endforeach ?>

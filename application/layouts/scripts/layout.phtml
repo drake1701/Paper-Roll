@@ -9,22 +9,62 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Paper Roll Beta</title>
-  <?php echo $this->headLink()->appendStylesheet('/css/global.css') ?>
+  <title>Spartacus Wallpaper</title>
+  <?php echo $this->headLink()->appendStylesheet('/public/css/global.css') ?>
 </head>
 <body>
-<div id="header" style="background-color: #EEEEEE; height: 30px;">
-    <div id="header-logo" style="float: left">
-        <b>Paper Roll Beta</b>
-    </div>
 	<?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
-    <div style="float:right">
+	<div id="admin">
+		<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'index'), 'default') ?>" title="logout">admin</a>&nbsp;|&nbsp;
 		<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'logout'), 'default') ?>" title="logout">logout</a>
-    </div>
+	</div>
 	<?php endif; ?>
-</div>
- 
-<?php echo $this->layout()->content ?>
- 
-</body>
+	<div class="wrapper-outer">
+		<div class="header-banner<?php echo Paper::helper('Date')->getBannerImage()?>">
+			<div class="logo">
+				<a href="/"><img src="/public/images/logo.png" alt="Spartacus Wallpaper" /></a>
+				<ul class="top-nav">
+					<li><a href="/page/about">about</a></li>
+					<li><a href="/page/tags">tags</a></li>
+					<li><a href="/page/contact">contact</a></li>
+					<li><a href="/page/donate">donate</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="wrapper-inner">
+			<div class="sidebar">
+				<div class="sidebar-head"></div>
+				<p class="section-head">Wallpapers:</p>
+				<ul>
+				<?php $kinds = new PaperRoll_Model_ImageKind(); ?>
+				<?php foreach ($kinds->getTagLinks() as $kind) : ?>
+					<li><a href="/tag/<?php echo $kind->getData('path') ?>"><?php echo $kind->getData('label') ?></a></li>
+				<?php endforeach; ?>
+				</ul>
+				<p class="section-head">Archive by Year:</p>
+				<ul class="years">
+				<?php $tag = new PaperRoll_Model_Tag(); ?>
+				<?php foreach ($tag->getYears() as $year) : ?>
+					<li><a href="/tag/<?php echo $year ?>"><?php echo $year ?></a></li>
+				<?php endforeach; ?>
+				</ul>
+				<p class="section-head">Top 20:</p>
+				<ul>
+				<?php foreach ($tag->getTop(20) as $tag) : ?>
+					<li><a href="/tag/<?php echo $tag->getData('slug') ?>"><?php echo $tag->getData('title') ?></a></li>
+				<?php endforeach; ?>
+				</ul>
+			</div>
+			<div class="content">
+				<div class="content-head"></div>
+				<div class="ad-top"></div>
+				<?php echo $this->layout()->content ?>
+				<div class="ad-bottom"></div>
+			</div>
+		</div>
+	</div>
+	<div id="copy">
+		<p>Site design &copy;<?php echo date("Y") ?> by <a href="http://drogers.net">Dennis Rogers</a>.</p>
+	</div>
+	</body>
 </html>

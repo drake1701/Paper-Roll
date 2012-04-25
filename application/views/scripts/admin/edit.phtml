@@ -6,4 +6,73 @@
  */
  ?>
 
-<?php echo $this->form ?>
+<?php
+$form = new Zend_Form(array(
+	"action" => "/admin/save",
+	"method" => "post"
+));
+
+	$form->addElement('text', 'title', array(
+		'filters'    => array('StringTrim'),
+		'required'   => true,
+		'label'      => 'title:',
+	));
+
+	$content = $form->addElement('textarea', 'content', array(
+		'label'		=> 'content:',
+		'cols'		=> '40',
+		'rows'		=> '5',
+	));
+
+	if($this->entry == null || $this->entry->getData('queue') != null){
+	$queue = $form->addElement('select', 'queue', array(
+		'label'		=> 'queue:',
+		'multiOptions'	=> array(
+			'0' => "Select Queue",
+			'1' => "Normal",
+			'2' => "Calendar"
+		)
+	));
+	}
+
+	$form->addElement('text', 'tags', array(
+		'filters'    => array('StringTrim'),
+		'required'   => true,
+		'label'      => 'tags:',
+	));
+
+	$form->addElement('text', 'url_path', array(
+		'filters'    => array('StringTrim'),
+		'required'   => true,
+		'label'      => 'url path:',
+	));
+
+	$form->addElement('hidden', 'filename', array());
+
+	$login = $form->addElement('submit', 'save', array(
+		'required' => false,
+		'ignore'   => true,
+		'label'    => 'save',
+	));
+
+	$form->setDecorators(array(
+		'FormElements',
+		array('HtmlTag', array('tag' => 'dl', 'class' => 'zend_form')),
+		array('Description', array('placement' => 'prepend')),
+		'Form'
+	));
+
+if($this->entry){
+	$form->addElement('hidden', 'id', array());
+	$form->populate($this->entry->getData());
+	$tags = array();
+	foreach($this->entry->getTags() as $tag){
+		$tags[] = $tag['slug'];
+	}
+	$form->populate(array("tags" => implode(",", $tags)));
+}
+?>
+<?php if ($this->entry) : ?>
+	<img style="float:right" src="<?php echo $this->entry->getImageUrl('thumb') ?>" />
+<?php endif; ?>
+<?php echo $form; ?>

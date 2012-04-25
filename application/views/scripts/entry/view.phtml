@@ -1,8 +1,31 @@
-<?php $entry = $this->entry ?>
-<h2><?php echo $entry->getTitle() ?></h2>
-<?php foreach($entry->getImages() as $type => $path): ?>
-<img src="<?php echo $path?>" alt="<?php echo $entry->getTitle() ?>" title="<?php echo $entry->getTitle() ?>"/><br/>
-<?php endforeach; ?>
+<?php
+/**
+ * @package		PaperRoll
+ * @author		Dennis Rogers
+ * @address		www.drogers.net
+ */
+$date = new PaperRoll_View_Helper_Date();
+$entry = $this->entry
+?>
 
-<pre>
-<?php var_dump($this->entry) ?>
+<div class="entry-view">
+	<h2 class="entry-title"><?php echo $entry->getTitle() ?></h2>
+	<p class="entry-date"><?php echo $date->format($entry->getPublishedAt()) ?></p>
+	<a href="<?php echo $entry->getFirstImage()->getUrl() ?>" class="entry-preview-image">
+<img src="<?php echo $entry->getImageUrl('preview') ?>" alt="<?php echo $entry->getTitle() ?>" title="<?php echo $entry->getTitle() ?>"/></a>
+	<p class="entry-content"><?php echo $entry->getContent() ?></p>
+	<div class="entry-versions">
+		<h4>Versions</h4>
+		<?php foreach ($entry->getImages() as $image) : ?>
+			<?php if ($image->getKind()->getPosition()) : ?>
+				<a href="<?php echo $image->getUrl() ?>" alt="<?php echo $image->getKind()->getLabel() ?>"><?php echo $image->getKind()->getLabel() ?></a>
+			<?php endif; ?>
+		<?php endforeach; ?>
+	</div>
+	<div class="entry-tags">
+		<h4>Tags</h4>
+		<?php foreach ($entry->getTags() as $tag) : ?>
+			<a href="<?php echo $tag['url'] ?>"><?php echo $tag['title'] ?></a>
+		<?php endforeach; ?>
+	</div>
+</div>

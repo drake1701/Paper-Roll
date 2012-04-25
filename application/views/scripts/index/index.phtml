@@ -6,13 +6,14 @@
  */
 $date = new PaperRoll_View_Helper_Date();
 ?>
-<h1>Home Page</h1>
 
 <?php foreach ($this->entries as $entry) : ?>
+
 	<div class="entry">
-		<a href="/<?php echo $entry->getUrlPath()?>"><img src="<?php echo $entry->getImageUrl('preview') ?>" alt="<?php echo $entry->getTitle() ?>" /></a>
-		<a href="/<?php echo $entry->getUrlPath()?>"><h2><?php echo $entry->getTitle() ?></h2></a>
-		<p class="date">Posted on: <?php echo $date->format($entry->getPublishedAt()) ?></p>
+		<h2 class="entry-title"><a href="/<?php echo $entry->getUrlPath()?>"><?php echo $entry->getTitle() ?></a></h2>
+		<p class="entry-date"><?php echo $date->format($entry->getPublishedAt()) ?></p>
+		<a href="/<?php echo $entry->getUrlPath()?>" class="entry-preview-image"><img src="<?php echo $entry->getImageUrl('preview') ?>" alt="<?php echo $entry->getTitle() ?>" /></a>
+		<p class="entry-content"><?php echo $entry->getContent(); ?></p>
 	</div>
 <?php endforeach; ?>
 

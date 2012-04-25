@@ -20,13 +20,33 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 		}		
 		$this->setPreview($images['preview']);
 		$this->setThumb($images['thumb']);
-		return $this;		
+		$this->prepareTags();
+		return $this;
+	}
+
+	public function save()
+	{
+		if(!is_array($this->getData('tags'))){
+			$slugs = explode(",", $this->getData('tags'));
+			$tag = new PaperRoll_Model_Tag();
+			$tag->checkLinks($this->getId(), $slugs);
+		}
+		parent::save();
 	}
 
 	public function getImageUrl($type){
 		$images = $this->getImages();
 		if(isset($images[$type])){
-			return $images[$type];
+			return $images[$type]->getUrl();
+		}
+		return '';
+	}
+
+	public function getFirstImage(){
+		foreach($this->getImages() as $image){
+			if($image->getKind()->getPosition() != null){
+				return $image;
+			}
 		}
 		return '';
 	}
@@ -46,6 +66,14 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 			return false;
 		}
 		return true;
+	}
+
+	public function prepareTags(){
+		// get tags from db
+		$tag = new PaperRoll_Model_Tag();
+		$tags = $tag->getEntryTags($this);
+		$this->setTags($tags);
+		return $this;
 	}
 
 }

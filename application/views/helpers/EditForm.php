@@ -22,6 +22,7 @@ class PaperRoll_View_Helper_EditForm extends Zend_Form
 		$queue = $this->addElement('select', 'queue', array(
 			'label'		=> 'queue:',
 			'multiOptions'	=> array(
+				'0' => "Select Queue",
 				'1' => "Normal",
 				'2' => "Calendar"
 			)
