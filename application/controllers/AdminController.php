@@ -34,7 +34,8 @@ class AdminController extends Zend_Controller_Action
 
 	public function indexAction()
 	{
-
+		$entry = new PaperRoll_Model_Entry();
+		$this->view->queue = $entry->getQueue();
 	}
 
 	public function newAction()

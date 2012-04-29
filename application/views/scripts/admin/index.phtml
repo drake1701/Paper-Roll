@@ -5,6 +5,30 @@
  * @site 	www.drogers.net
  */
  ?>
+<h2>Admin Panel</h2>
 <ul>
 	<li><a href="<?php echo $this->url(array('controller' => "admin",'action' => "new")); ?>">Check for New</a></li>
 </ul>
+<h2>Queued Entries</h2>
+<table>
+	<thead>
+		<tr>
+			<td>ID</td>
+			<td>Title</td>
+			<td>Publish Date</td>
+			<td>Actions</td>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($this->queue as $entry) : ?>
+		<tr>
+			<td><?php echo $entry->getData('id') ?></td>
+			<td><?php echo $entry->getData('title') ?></td>
+			<td><?php echo Paper::helper('Date')->format($entry->getData('published_at')) ?></td>
+			<td>
+				<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'edit','id'=>$entry->getData('id'))) ?>">Edit</a>&nbsp;|&nbsp;<a href="<?php echo $entry->getUrl() ?>">View</a>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>

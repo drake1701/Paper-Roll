@@ -235,3 +235,17 @@ a:hover {
 input[type=text] {
 	width:250px;
 }
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+thead td {
+	font-weight: bold;
+}
+
+td {
+	border: 1px solid #757d56;
+	padding: 1px 5px;
+}

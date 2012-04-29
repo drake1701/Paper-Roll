@@ -15,7 +15,7 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 		$images = $images->getEntryImages($id);
 		$this->setImages($images);
 		if(!isset($images['thumb']) || !isset($images['preview'])){
-			Bootstrap::log("Required images not found for Entry $id");
+			Paper::log("Required images not found for Entry $id");
 			return false;
 		}		
 		$this->setPreview($images['preview']);
@@ -74,6 +74,21 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 		$tags = $tag->getEntryTags($this);
 		$this->setTags($tags);
 		return $this;
+	}
+
+	public function getQueue($type = false)
+	{
+		$db = $this->getResource();
+		$queued_entries = $db->fetchAll($db->select()->where("queue IS NOT NULL"));
+		return $this->getMapper()->loadEach($queued_entries);
+	}
+
+	public function reindexImages(){
+		if($this->getId()){
+			return false;
+		}
+		
+
 	}
 
 }
