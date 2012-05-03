@@ -28,7 +28,6 @@ $form = new Zend_Form(array(
 	$queue = $form->addElement('select', 'queue', array(
 		'label'		=> 'queue:',
 		'multiOptions'	=> array(
-			'0' => "Select Queue",
 			'1' => "Normal",
 			'2' => "Calendar"
 		)
@@ -70,9 +69,20 @@ if($this->entry){
 		$tags[] = $tag['slug'];
 	}
 	$form->populate(array("tags" => implode(",", $tags)));
+	$image = $this->entry->getImageUrl('thumb');
+} else if($this->image){
+	$image = "/public/gallery/thumb/".$this->image;
+	$tag = str_replace(".jpg", "", $this->image);
+	$form->populate(array(
+		'title'	=> Paper::helper('name')->fileToName($this->image),
+		'tags'  => Paper::helper('name')->stripRoman($tag),
+		'url_path' => $tag.".html",
+		'filename' => $this->image
+	));
 }
 ?>
-<?php if ($this->entry) : ?>
-	<img style="float:right" src="<?php echo $this->entry->getImageUrl('thumb') ?>" />
+<?php if (isset($image)) : ?>
+	<img style="float:right" src="<?php echo $image ?>" />
 <?php endif; ?>
 <?php echo $form; ?>
+<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'index'), 'default', true) ?>" title="logout">&lt; back</a>

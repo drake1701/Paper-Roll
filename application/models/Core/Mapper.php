@@ -37,7 +37,7 @@ abstract class PaperRoll_Model_Core_Mapper
 
 		$data['modified_at'] = date('Y-m-d H:i:s');
         if (null === ($id = $object->getId())) {
-            $data['modified_at'] = $data['created_at'];
+            $data['created_at'] = $data['modified_at'];
         }
 
 		$columns = $this->getDbTable()->fetchNew()->toArray();
@@ -49,10 +49,11 @@ abstract class PaperRoll_Model_Core_Mapper
 			}
 		}
         if (null === ($id = $object->getId())) {
-            $this->getDbTable()->insert($columns);
+            $id = $this->getDbTable()->insert($columns);
         } else {
             $this->getDbTable()->update($columns, array('id = ?' => $id));
         }
+		return $id;
     }
  
     public function load($id, PaperRoll_Model_Core_Object $object)

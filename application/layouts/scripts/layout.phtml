@@ -15,8 +15,8 @@
 <body>
 	<?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
 	<div id="admin">
-		<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'index'), 'default') ?>" title="logout">admin</a>&nbsp;|&nbsp;
-		<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'logout'), 'default') ?>" title="logout">logout</a>
+		<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'index'), 'default', true) ?>" title="logout">admin</a>&nbsp;|&nbsp;
+		<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'logout'), 'default', true) ?>" title="logout">logout</a>
 	</div>
 	<?php endif; ?>
 	<div class="wrapper-outer">

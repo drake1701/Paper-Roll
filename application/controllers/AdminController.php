@@ -49,6 +49,7 @@ class AdminController extends Zend_Controller_Action
 
 	public function newprocessAction()
 	{
+		$this->view->image = $this->getRequest()->getParam('image');
 		$this->_forward('edit');
 	}
 
@@ -65,12 +66,27 @@ class AdminController extends Zend_Controller_Action
 	{
 		$data = $this->getRequest()->getPost();
 		$entry = new PaperRoll_Model_Entry();
-		if($data['id'])
+		if(isset($data['id']))
 			$entry->load($data['id']);
 
 		$entry->setData($data);
 		$entry->save();
-        return $this->_helper->redirector->gotoSimple('edit', 'admin', null, array("id" => $data['id']));
+		if(isset($data['tags']) && $data['tags'] != ''){
+			$slugs = explode(",", $data['tags']);
+			$tag = new PaperRoll_Model_Tag();
+			$tag->checkLinks($entry->getId(), $slugs);
+		}
+        return $this->_helper->redirector->gotoSimple('edit', 'admin', null, array("id" => $entry->getId()));
+	}
+
+	public function deleteAction()
+	{
+		if($this->getRequest()->getParam('id')){
+			$entry = new PaperRoll_Model_Entry();
+			$entry->load($this->getRequest()->getParam('id'));
+			$entry->delete();
+		}
+        return $this->_helper->redirector->gotoSimple('index', 'admin');
 	}
 
 	public function getAuthAdapter(array $params)

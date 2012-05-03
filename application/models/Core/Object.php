@@ -25,9 +25,16 @@ abstract class PaperRoll_Model_Core_Object
     }
 
     public function save(){
-    	$this->getMapper()->save($this);
-    	return $this;
+    	$id = $this->getMapper()->save($this);
+    	return $id;
     }
+
+	public function delete(){
+		if($this->getData('id')){
+			$db = $this->getResource();
+			$db->delete($db->getAdapter()->quoteInto("id = ?", $this->getData('id')));
+		}
+	}
  
     public function __call($method, $args)
     {

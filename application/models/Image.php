@@ -25,7 +25,49 @@ class PaperRoll_Model_Image extends PaperRoll_Model_Core_Object
 		}
 		return $temp;
 	}
-	
+
+	public function reindexImages($id)
+	{
+		$db = $this->getResource();
+		$entry = new PaperRoll_Model_Entry();
+		$entry->load($id);
+		if(($file = $entry->getData('filename')) === false){
+			$file = $db->fetchAll($db->select()->where('entry_id = ?', $id)->limit(1))->toArray();
+			$file = array_pop($file);
+			if(isset($file['path'])){
+				$entry->setData('filename', $file['path']);
+				$entry->save();
+			}
+		}
+		$files = glob(APPLICATION_PATH."/../public/gallery/*/".$file);
+		$images = $this->getEntryImages($id);
+		if(count($files) == count($images)){
+			return true;
+		} else {
+			foreach($files as $k => $v){
+				$files[$k] = str_replace(APPLICATION_PATH."/..", "", $v);
+			}
+			foreach($images as $k => $v){
+				$images[$k] = $v->getUrl();
+			}
+			$kinds = new PaperRoll_Model_ImageKind();
+			$kinds = $kinds->getKinds();
+			$kinds = array_combine($kinds, array_keys($kinds));
+			foreach(array_diff($files, $images) as $new){
+				$parts = explode("/", $new);
+				$kind = $parts[3];
+				if(isset($kinds[$kind])){
+					$db->insert(array(
+						'entry_id' 	=> $id,
+						'path'		=> $file,
+						'kind'		=> $kinds[$kind]
+					));
+				}
+			}
+		}
+		return false;
+	}
+
 	public function load($id)
 	{
 		parent::load($id);

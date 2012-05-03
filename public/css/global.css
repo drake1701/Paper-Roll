@@ -198,6 +198,10 @@ padding:20px;
 width:950px;
 }
 
+.no-display {
+	display:none;
+}
+
 #copy {
 	text-align: center;
 	font-size: 12px;
@@ -234,6 +238,12 @@ a:hover {
 
 input[type=text] {
 	width:250px;
+}
+
+ul {
+	list-style: none outside none;
+	padding: 0 0 0 10px;
+	margin: 0 0 10px;
 }
 
 table {

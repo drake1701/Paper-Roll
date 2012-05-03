@@ -6,13 +6,20 @@
  */
 
 $helper = new PaperRoll_View_Helper_Name();
+$i = 0;
+$totalEntries = count($this->images);
+$columnCount = 3;
 
  ?>
-
-<div style="float:right;width:610px;">
-	<?php foreach ($this->images as $image) : ?>
-		<a href="<?php echo $this->url(array('controller'=>'admin', 'action'=>'newprocess', 'image' => $image)) ?>">
-			<img src="/public/gallery/thumb/<?php echo $image ?>" alt="<?php echo $helper->fileToName($image); ?>" />
-		</a>
-	<?php endforeach; ?>
-</div>
+<?php foreach ($this->images as $image) : ?>
+		<?php if ($i % $columnCount == 0) : ?>
+			<ul class="entry-grid">
+		<?php endif; ?>
+				<li class="entry-item">
+					<p class="entry-title"><a href="<?php echo $this->url(array('controller'=>'admin', 'action'=>'newprocess', 'image' => $image)) ?>"><?php echo $image ?></a></p>
+					<div class="entry-image"><a href="<?php echo $this->url(array('controller'=>'admin', 'action'=>'newprocess', 'image' => $image)) ?>"><img src="/public/gallery/thumb/<?php echo $image ?>" alt="<?php echo $helper->fileToName($image) ?>"/></a></div>
+				</li>
+		<?php if (++$i % $columnCount == 0 || $i >= $totalEntries) : ?>
+			</ul>
+		<?php endif; ?>
+<?php endforeach ?>

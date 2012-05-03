@@ -20,15 +20,17 @@ class PaperRoll_View_Helper_Date extends Zend_Date
 
 	public function getBannerImage()
 	{
-		if(!isset($this->_bannerImage))
+		$cache = Paper::helper('cache')->getCache();
+		if(($result = $cache->load('bannerimage')) === false )
 		{
 			chdir(APPLICATION_PATH."/../");
 			$banners = glob("public/images/banners/*/*.jpg");
 			$i = date("j") % count($banners);
 			$parts = explode("/", $banners[$i]);
-			$this->_bannerImage = " {$parts[3]}\" style=\"background-image:url(/{$banners[$i]});";
+			$result = " {$parts[3]}\" style=\"background-image:url(/{$banners[$i]});";
+			$cache->save($result, 'bannerimage');
 		}
-		return $this->_bannerImage;
+		return $result;
 	}
 
 }

@@ -15,8 +15,7 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 		$images = $images->getEntryImages($id);
 		$this->setImages($images);
 		if(!isset($images['thumb']) || !isset($images['preview'])){
-			Paper::log("Required images not found for Entry $id");
-			return false;
+			return $this;
 		}		
 		$this->setPreview($images['preview']);
 		$this->setThumb($images['thumb']);
@@ -26,13 +25,16 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 
 	public function save()
 	{
-		if(!is_array($this->getData('tags'))){
-			$slugs = explode(",", $this->getData('tags'));
-			$tag = new PaperRoll_Model_Tag();
-			$tag->checkLinks($this->getId(), $slugs);
+		$this->load(parent::save());
+		if($this->getData('queue') != '' && $this->getData('published_at') == ''){
+			$queue = new PaperRoll_Model_Queue();
+			$this->setData('published_at', $queue->getLastPublishDate($this->getData('queue')));
+			$this->save();
 		}
-		parent::save();
+		$this->reindexImages();
 	}
+
+
 
 	public function getImageUrl($type){
 		$images = $this->getImages();
@@ -84,11 +86,11 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 	}
 
 	public function reindexImages(){
-		if($this->getId()){
+		if(!$this->getId()){
 			return false;
 		}
-		
-
+		$image = new PaperRoll_Model_Image();
+		$image->reindexImages($this->getId());
 	}
 
 }

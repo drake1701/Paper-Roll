@@ -12,7 +12,12 @@ class PaperRoll_View_Helper_Name {
 	 */
 	public function codeToName($code)
 	{
-		$code = $this->stripRoman($code);
+		if(preg_match("#-[ivxlm]*\$#", $code)){
+			$parts = explode("-", $code);
+			$roman = strtoupper(array_pop($parts));
+			array_push($parts, $roman);
+			$code = implode("-", $parts);
+		}
 		return trim(ucwords(preg_replace("#(-|_)#", " ", $code)));
 	}
 

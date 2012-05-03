@@ -7,6 +7,7 @@
 
 class Paper extends Zend_Application_Bootstrap_Bootstrap
 {
+	protected $cache;
 
 	protected function _initDoctype()
 	{
@@ -16,11 +17,12 @@ class Paper extends Zend_Application_Bootstrap_Bootstrap
 	}
 	
 	static public function log($message)
-	{	
-		if(!is_dir(APPLICATION_PATH . '/../logs/')){
-			mkdir(APPLICATION_PATH . '/../logs/');			
+	{
+		$logDir = APPLICATION_PATH . '/../var/log/';
+		if(!is_dir($logDir)){
+			mkdir($logDir);
 		}
-		$stream = fopen(APPLICATION_PATH . '/../logs/system.log', 'a', false);
+		$stream = fopen("{$logDir}system.log", 'a', false);
 		if (! $stream) {
 		    throw new Exception('Failed to open stream');
 		}
@@ -37,8 +39,19 @@ class Paper extends Zend_Application_Bootstrap_Bootstrap
 
 	static public function helper($name)
 	{
+		$name = ucwords($name);
 		$helper = "PaperRoll_View_Helper_$name";
 		return new $helper;
 	}
+
+	public function getCache()
+	{
+		if($this->cache == null) {
+			$this->cache = $this::helper('Cache')->getCache();
+		}
+		return $this->cache;
+	}
+
+
 }
 

@@ -8,6 +8,7 @@
 <h2>Admin Panel</h2>
 <ul>
 	<li><a href="<?php echo $this->url(array('controller' => "admin",'action' => "new")); ?>">Check for New</a></li>
+	<li><a href="<?php echo $this->url(array('controller' => "admin",'action' => "reindeximages")); ?>">Refresh Image Index</a></li>
 </ul>
 <h2>Queued Entries</h2>
 <table>
@@ -26,7 +27,9 @@
 			<td><?php echo $entry->getData('title') ?></td>
 			<td><?php echo Paper::helper('Date')->format($entry->getData('published_at')) ?></td>
 			<td>
-				<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'edit','id'=>$entry->getData('id'))) ?>">Edit</a>&nbsp;|&nbsp;<a href="<?php echo $entry->getUrl() ?>">View</a>
+				<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'edit','id'=>$entry->getData('id'))) ?>">Edit</a>&nbsp;|&nbsp;
+				<a href="<?php echo $entry->getUrl() ?>">View</a>&nbsp;|&nbsp;
+				<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'delete','id'=>$entry->getData('id'))) ?>">Delete</a>
 			</td>
 		</tr>
 		<?php endforeach; ?>
