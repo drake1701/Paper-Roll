@@ -80,7 +80,7 @@ class ErrorController extends Zend_Controller_Action
     	if($row && $row->id > 0){
 	    	return array('action' => 'view', 'controller' => 'entry', 'module' => null, 'params' => array('e' => $row->id));    	
     	} else {
-    		return false;
+    		return array('action' => 'index', 'controller' => 'index', 'module' => null, 'params' => null);
     	}
     	
     }

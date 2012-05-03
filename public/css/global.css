@@ -63,6 +63,20 @@ padding:10px;
 width:910px;
 }
 
+.ad-top {
+	position: relative;
+	top: -14px;
+	left: -18px;
+}
+
+.ad-middle{
+	margin: -20px -20px 20px;
+}
+
+.ad-bottom {
+	margin:  10px -20px;
+}
+
 .logo {
 height:140px;
 position:relative;

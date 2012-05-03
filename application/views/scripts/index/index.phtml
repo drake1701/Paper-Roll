@@ -5,14 +5,29 @@
  * @address		www.drogers.net
  */
 $date = new PaperRoll_View_Helper_Date();
+$i = 0;
 ?>
 
 <?php foreach ($this->entries as $entry) : ?>
-
 	<div class="entry">
 		<h2 class="entry-title"><a href="/<?php echo $entry->getUrlPath()?>"><?php echo $entry->getTitle() ?></a></h2>
 		<p class="entry-date"><?php echo $date->format($entry->getPublishedAt()) ?></p>
 		<a href="/<?php echo $entry->getUrlPath()?>" class="entry-preview-image"><img src="<?php echo $entry->getImageUrl('preview') ?>" alt="<?php echo $entry->getTitle() ?>" /></a>
 		<p class="entry-content"><?php echo $entry->getContent(); ?></p>
 	</div>
+	<?php if ($i++ == 0): ?>
+	<div class="ad-middle">
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-9622612302631221";
+		/* 728x90, created 12/30/09 */
+		google_ad_slot = "7751544997";
+		google_ad_width = 728;
+		google_ad_height = 90;
+		//-->
+		</script>
+		<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+	</div>
+	<?php endif; ?>
 <?php endforeach; ?>

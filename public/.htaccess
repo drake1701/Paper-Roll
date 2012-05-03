@@ -5,4 +5,4 @@ RewriteCond %{REQUEST_FILENAME} !-l
 
 RewriteRule .* index.php [L]
 
-SetEnv APPLICATION_ENV development
+SetEnv APPLICATION_ENV production
