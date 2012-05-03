@@ -16,4 +16,11 @@ class PageController extends Zend_Controller_Action
     {
     	$this->_forward("showall", "tag");
     }
+
+	public function aboutAction() {}
+
+	public function contactAction() {}
+
+	public function donateAction() {}
+
 }

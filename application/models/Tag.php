@@ -118,7 +118,7 @@ class PaperRoll_Model_Tag extends PaperRoll_Model_Core_Object {
 				->setIntegrityCheck(false)
 				->from("tag")
 				->join(array("m" => "entry_tag"), "m.tag_id = tag.id", null)
-				->join(array("e" => new Zend_Db_Expr("(SELECT DISTINCT id FROM `entry` ORDER BY `published_at` DESC)")), "e.id = m.entry_id", array("entry_id" => "id"))
+				->join(array("e" => new Zend_Db_Expr("(SELECT DISTINCT id FROM `entry` WHERE `queue` IS NULL ORDER BY `published_at` DESC)")), "e.id = m.entry_id", array("entry_id" => "id"))
 				->columns(array("count" => "COUNT(*)"))
 				->order("tag.title")
 				->order("m.entry_id DESC")

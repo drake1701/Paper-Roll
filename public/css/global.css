@@ -20,6 +20,10 @@ font-family:Helvetica;
 margin-bottom: 40px;
 }
 
+.entry {
+	margin-bottom:45px;
+}
+
 .entry-content {
 font-size:14px;
 }

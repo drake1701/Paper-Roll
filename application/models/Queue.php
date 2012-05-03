@@ -44,8 +44,26 @@ class PaperRoll_Model_Queue {
 		return $result->published_at;
 	}
 
+	public function getNextQueueEntry() {
+		$entry = new PaperRoll_Model_Entry();
+		$db = $entry->getResource();
+		$result = $db->fetchRow($db->select()
+			->where("queue IS NOT NULL")
+			->where("published_at < NOW()")
+			->order('published_at ASC')
+			->limit(1));
+		if(count($result)){
+			return $entry->load($result->id);
+		}
+		return false;
+	}
+
 	public function popQueue() {
-		
+		while($entry = $this->getNextQueueEntry()){
+			$entry->setData('queue', new Zend_Db_Expr('NULL'));
+			$entry->save();
+			Paper::log($entry->getData('title'));
+		}
 	}
 
 }
