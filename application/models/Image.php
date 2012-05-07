@@ -8,7 +8,7 @@
 class PaperRoll_Model_Image extends PaperRoll_Model_Core_Object
 {
 
-	protected $_url = "/public/gallery/";
+	protected $_url = "http://spartacuswallpaper.com/public/gallery/";
 
 	public function getEntryImages($id)
 	{

@@ -74,7 +74,7 @@ width:910px;
 }
 
 .ad-bottom {
-	margin:  10px -20px;
+	margin:  100px -20px -10px;
 }
 
 .logo {
@@ -85,6 +85,10 @@ width:340px;
 
 .right .logo {
 	margin-left: 566px;
+}
+
+.social-media {
+	float:right;
 }
 
 .sidebar {
