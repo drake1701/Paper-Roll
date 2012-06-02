@@ -95,8 +95,8 @@ abstract class PaperRoll_Model_Core_Object
 		return new $class;
 	}
 
-	/*
-	 * @returns Zend_Db_Table_Abstract
+	/**
+	 * @return Zend_Db_Table_Abstract
 	 */
 	public function getResource(){
 		return $this->getMapper()->getDbTable();

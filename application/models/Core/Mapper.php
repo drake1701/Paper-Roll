@@ -23,8 +23,8 @@ abstract class PaperRoll_Model_Core_Mapper
         return $this;
     }
 
-	/*
-	 * @returns Zend_Db_Table
+	/**
+	 * @return Zend_Db_Table
 	 */
     public function getDbTable()
     {
