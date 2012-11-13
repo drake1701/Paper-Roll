@@ -13,6 +13,9 @@ $entry = $this->entry
 	<p class="entry-date"><?php echo $date->format($entry->getPublishedAt()) ?></p>
 	<a href="<?php echo $entry->getFirstImage()->getUrl() ?>" class="entry-preview-image">
 <img src="<?php echo $entry->getImageUrl('preview') ?>" alt="<?php echo $entry->getTitle() ?>" title="<?php echo $entry->getTitle() ?>"/></a>
+	<?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
+		<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'edit','id'=>$entry->getData('id'))) ?>">Edit</a>
+	<?php endif; ?>
 	<p class="entry-content"><?php echo $entry->getContent() ?></p>
 	<div class="social-media">
 		<div id="fb-root"></div>
