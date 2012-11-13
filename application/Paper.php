@@ -20,7 +20,7 @@ class Paper extends Zend_Application_Bootstrap_Bootstrap
 	{
 		$logDir = APPLICATION_PATH . '/../var/log/';
 		if(!is_dir($logDir)){
-			mkdir($logDir);
+			mkdir($logDir, 0777, true);
 		}
 		$stream = fopen("{$logDir}system.log", 'a', false);
 		if (! $stream) {
