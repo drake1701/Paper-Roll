@@ -48,12 +48,22 @@ $entry = $this->entry
 	</div>
 	<div class="entry-tags">
 		<h4>Tags</h4>
-		<?php
-			$tags = array();
-			foreach ($entry->getTags() as $tag){
-				$tags[] = "<a href=\"{$tag['url']}\">{$tag['title']}</a>";
-			}
-			echo implode(", ", $tags);
-		?>
+        <ul>
+        <?php foreach ($entry->getTags() as $tag): ?>
+            <li><a href="<?php echo $tag['url'] ?>"><?php echo $tag['title'] ?></a></li>
+        <?php endforeach; ?>
+        </ul>
 	</div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'spartacuswallpaper';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
 </div>

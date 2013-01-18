@@ -49,6 +49,8 @@ margin:0;
 .entry-versions,
 .entry-tags {
 	font-size:14px;
+    float: left;
+    width: 200px;
 }
 
 .entry-versions h4,
@@ -158,7 +160,7 @@ padding:2px 0 12px 5px;
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	overflow: hidden;
+	overflow: auto;
 }
 
 .entry-grid .entry-item {
