@@ -64,6 +64,8 @@ class AdminController extends Zend_Controller_Action
 
 	public function saveAction()
 	{
+		try{
+			
 		$data = $this->getRequest()->getPost();
 		$entry = new PaperRoll_Model_Entry();
 		if(isset($data['id']))
@@ -75,6 +77,10 @@ class AdminController extends Zend_Controller_Action
 			$slugs = explode(",", $data['tags']);
 			$tag = new PaperRoll_Model_Tag();
 			$tag->checkLinks($entry->getId(), $slugs);
+		}
+		} Catch (Exception $e) {
+			Paper::log($e->getMessage());
+			Paper::log($e->getTraceAsString());
 		}
         return $this->_helper->redirector->gotoSimple('index', 'admin');
 	}
