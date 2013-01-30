@@ -16,6 +16,13 @@ $entry = $this->entry
 	<?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
 		<a href="<?php echo $this->url(array('controller'=>'admin','action'=>'edit','id'=>$entry->getData('id'))) ?>">Edit</a>
 	<?php endif; ?>
+    <?php foreach ($entry->getImages() as $image) : ?>
+        <?php if(preg_match("#iphone#", $image->getKind()->getPath())): ?>
+        <a class="mobile-preview" href="<?php echo $image->getUrl() ?>" alt="<?php echo $image->getKind()->getLabel() ?>">
+            <img src="<?php echo $image->getUrl() ?>" />
+        </a>
+        <?php endif; ?>
+    <?php endforeach; ?>
 	<p class="entry-content"><?php echo $entry->getContent() ?></p>
 	<div class="social-media">
 		<div id="fb-root"></div>
@@ -44,7 +51,7 @@ $entry = $this->entry
 		<h4>Versions</h4>
 		<ul>
 		<?php foreach ($entry->getImages() as $image) : ?>
-			<?php if ($image->getKind()->getPosition()) : ?>
+			<?php if ($image->getKind()->getExclude() == false) : ?>
 				<li><a href="<?php echo $image->getUrl() ?>" alt="<?php echo $image->getKind()->getLabel() ?>"><?php echo $image->getKind()->getLabel() ?></a></li>
 			<?php endif; ?>
 		<?php endforeach; ?>

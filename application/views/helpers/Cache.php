@@ -11,10 +11,15 @@ class PaperRoll_View_Helper_Cache {
 	{
 		$cacheDir = APPLICATION_PATH . '/../var/cache/';
 		if(!is_dir($cacheDir)){
-			mkdir($cacheDir, 0777, true);
+			mkdir($cacheDir);
 		}
 		return $cacheDir;
 	}
+
+    public function getCacheDir()
+    {
+        return $this->_getCacheDir();
+    }
 
 	public function getCache() {
 		$front = array(

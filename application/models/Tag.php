@@ -112,7 +112,8 @@ class PaperRoll_Model_Tag extends PaperRoll_Model_Core_Object {
 
 	public function getIndex()
 	{
-		if(($tags = $this->_cache->load('tags_index')) === false){
+//		if(($tags = $this->_cache->load('tags_index')) === false){
+//            Paper::log("reloading tag cache");
 			$db = $this->getResource();
 			$tags = $db->fetchAll($db->select()
 				->setIntegrityCheck(false)
@@ -125,8 +126,8 @@ class PaperRoll_Model_Tag extends PaperRoll_Model_Core_Object {
 				->group("tag.id")
 				->having("e.id = MAX(e.id)")
 			);
-			$this->_cache->save($tags, 'tags_index');
-		}
+//			$this->_cache->save($tags, 'tags_index');
+//		}
 		return $tags;
 	}
 

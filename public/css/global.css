@@ -53,6 +53,10 @@ margin:0;
     width: 200px;
 }
 
+.mobile-preview img {
+    width: 343px;
+}
+
 .entry-versions h4,
 .entry-tags h4 {
 	margin: 5px 0;

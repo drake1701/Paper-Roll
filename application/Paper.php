@@ -20,7 +20,7 @@ class Paper extends Zend_Application_Bootstrap_Bootstrap
 	{
 		$logDir = APPLICATION_PATH . '/../var/log/';
 		if(!is_dir($logDir)){
-			mkdir($logDir, 0777, true);
+			mkdir($logDir);
 		}
 		$stream = fopen("{$logDir}system.log", 'a', false);
 		if (! $stream) {
@@ -52,6 +52,33 @@ class Paper extends Zend_Application_Bootstrap_Bootstrap
 		return $this->cache;
 	}
 
+    protected function _initCache()
+    {
+        $dir = $this::helper('Cache')->getCacheDir();
 
+        $frontendOptions = array(
+            'lifetime' => 7200,
+            'default_options' => array(
+                'cache' => false,
+            ),
+            'regexps' => array(
+                '^/$' => array('cache' => true),
+                '^/page/tags' => array('cache' => true),
+                '^/admin' => array('cache' => false),
+            )
+        );
+
+        $backendOptions = array(
+            'cache_dir' =>$dir
+        );
+
+        // getting a Zend_Cache_Frontend_Page object
+        $cache = Zend_Cache::factory('Page',
+            'File',
+            $frontendOptions,
+            $backendOptions
+        );
+        $cache->start(md5($_SERVER['REQUEST_URI']));
+    }
 }
 
