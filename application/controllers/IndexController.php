@@ -12,6 +12,7 @@ class IndexController extends Zend_Controller_Action
     {
 		$entry = new PaperRoll_Model_Entry();
     	$this->view->entries = $entry->getLatest(10);
+    	$this->view->title = "Female Celebrity Wallpaper | ";
     }
 
 

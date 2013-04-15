@@ -23,11 +23,13 @@ class TagController extends Zend_Controller_Action
 			$entry = array_pop($this->view->entries);
 			$this->_redirect($entry->getUrlPath());
 		}
+    	$this->view->title = $tag->loadBySlug($this->getRequest()->getParam('tag'))->getData('title')." | ";
     }
 
 	public function showallAction()
 	{
         $tag = new PaperRoll_Model_Tag();
         $this->view->tags = $tag->getIndex();
+    	$this->view->title = "Tag Index | ";
 	}
 }
