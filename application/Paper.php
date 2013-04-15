@@ -57,7 +57,7 @@ class Paper extends Zend_Application_Bootstrap_Bootstrap
         $dir = $this::helper('Cache')->getCacheDir();
 
         $frontendOptions = array(
-            'lifetime' => 7200,
+            'lifetime' => 86400,
             'default_options' => array(
                 'cache' => false,
             ),

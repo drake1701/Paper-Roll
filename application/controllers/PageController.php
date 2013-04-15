@@ -17,10 +17,16 @@ class PageController extends Zend_Controller_Action
     	$this->_forward("showall", "tag");
     }
 
-	public function aboutAction() {}
+	public function aboutAction() {
+    	$this->view->title = "About | ";
+    }
 
-	public function contactAction() {}
+	public function contactAction() {
+    	$this->view->title = "Contact Me | ";
+    }
 
-	public function donateAction() {}
+	public function donateAction() {
+    	$this->view->title = "Donate | ";
+    }
 
 }

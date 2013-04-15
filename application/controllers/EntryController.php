@@ -25,6 +25,7 @@ class EntryController extends Zend_Controller_Action
     		$this->_redirect('entry');
     	}
     	$entry->load((int)$this->getRequest()->getParam('e'));
+    	$this->view->title = $entry->getData('title')." | ";
     	$this->view->entry = $entry;
     }
 }
