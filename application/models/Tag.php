@@ -147,7 +147,7 @@ class PaperRoll_Model_Tag extends PaperRoll_Model_Core_Object {
 		);
 		if($entries->count() == 0){
 			// check for posts by year
-			if(is_numeric($tag)){
+			if(is_numeric($tag) && $tag != "1080"){
 				$entries = $db->fetchAll($db->select()
 					->from("entry")
 					->where("entry.queue IS NULL")
