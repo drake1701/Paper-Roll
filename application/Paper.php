@@ -12,8 +12,8 @@ class Paper extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initDoctype()
 	{
 		$this->bootstrap('view');
-        	$view = $this->getResource('view');
-        	$view->doctype('XHTML1_STRICT');
+    	$view = $this->getResource('view');
+    	$view->doctype('XHTML1_STRICT');
 	}
 	
 	static public function log($message)
@@ -54,6 +54,7 @@ class Paper extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initCache()
     {
+        if(APPLICATION_ENV != "production") return;
         $dir = $this::helper('Cache')->getCacheDir();
 
         $frontendOptions = array(
