@@ -34,10 +34,12 @@ $form = new Zend_Form(array(
 	));
 	}
 
-	$form->addElement('text', 'tags', array(
+	$form->addElement('textarea', 'tags', array(
 		'filters'    => array('StringTrim'),
 		'required'   => true,
 		'label'      => 'tags:',
+		'cols'		=> '40',
+		'rows'		=> '5',
 	));
 
 	$form->addElement('text', 'url_path', array(
