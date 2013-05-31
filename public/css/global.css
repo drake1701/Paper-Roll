@@ -171,6 +171,7 @@ padding:2px 0 12px 5px;
 	float:left;
 	width: 200px;
 	padding: 15px;
+	overflow: hidden;
 }
 
 .entry-grid .entry-title {

@@ -16,7 +16,7 @@ $totalEntries = count($this->entries);
 			<ul class="entry-grid">
 		<?php endif; ?>
 				<li class="entry-item">
-					<p class="entry-title"><a href="/<?php echo $entry->getUrlPath()?>"><?php echo $this->escape($entry->getTitle()) ?></a></p>
+					<p class="entry-title"><a href="/<?php echo $entry->getUrlPath()?>" title="<?php echo $this->escape($entry->getTitle()) ?>"><?php echo $this->escape($entry->getTitle()) ?></a></p>
 					<div class="entry-image"><a href="/<?php echo $entry->getUrlPath()?>"><img src="<?php echo $entry->getImageUrl('thumb') ?>" alt="<?php echo $entry->getTitle() ?>"/></a></div>
 					<p class="entry-date"><?php echo Paper::helper("Date")->format($entry->getData('published_at'), true); ?></p>
 				</li>
