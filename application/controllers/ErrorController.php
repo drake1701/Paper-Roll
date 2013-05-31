@@ -33,6 +33,10 @@ class ErrorController extends Zend_Controller_Action
                 break;
         }
         
+        if(APPLICATION_ENV == "production"){
+        	return $this->_forward("index", "index", null, null);
+        }
+        
         // Log exception, if logger available
         Paper::log($errors->exception->getMessage(), $errors->exception->getTraceAsString());
         
@@ -63,7 +67,7 @@ class ErrorController extends Zend_Controller_Action
 			return array('action' => 'list', 'controller' => 'tag', 'module' => null, 'params' => array('tag' => $path_parts[2]));
 		}
 
-    	if(count($path_parts) > 2 AND strpos($path, ".html")){
+    	if(count($path_parts) > 2){
     		// current db has no paths where final file is identical, so send old requests to simpler paths with 301s
     		$this->_redirect(array_pop($path_parts), array('code' => 301));
     	}
@@ -73,12 +77,13 @@ class ErrorController extends Zend_Controller_Action
     	$table = $entry->getMapper()->getDbTable();
     	$row = $table->fetchRow(
     		$table->select()
-    			->where('url_path = ?', $key)	
+    			->where('url_path = ?', $key)
+    			->orWhere('url_path = ?', $key.".html")
     	);
     	if($row && $row->id > 0){
 	    	return array('action' => 'view', 'controller' => 'entry', 'module' => null, 'params' => array('e' => $row->id));    	
     	} else {
-    		return array('action' => 'index', 'controller' => 'index', 'module' => null, 'params' => null);
+    		return false;
     	}
     	
     }
