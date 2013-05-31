@@ -36,6 +36,12 @@ class Paper extends Zend_Application_Bootstrap_Bootstrap
             		
     	$logger->info($message);
 	}
+	
+	static public function getBaseUrl()
+	{
+    	$fc = Zend_Controller_Front::getInstance();
+    	return $fc->getBaseUrl();
+	}
 
 	static public function helper($name)
 	{
@@ -54,7 +60,6 @@ class Paper extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initCache()
     {
-        if(APPLICATION_ENV != "production") return;
         $dir = $this::helper('Cache')->getCacheDir();
 
         $frontendOptions = array(

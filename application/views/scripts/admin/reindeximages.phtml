@@ -1,0 +1,31 @@
+<?php
+/**
+ * @package	PaperRoll
+ * @author 	dennis
+ * @site 	www.drogers.net
+ */
+?>
+<script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+	var i = 0;
+    function doReindex(){
+	    jQuery.ajax({
+    	    url: "<?php echo $this->url(array('controller' => "admin",'action' => "reindeximages")); ?>",
+    	    type: "post",
+    	    data: {"i":i},
+    	    success: function(transport){
+        	    jQuery("#output").append("<li>"+transport+"</li>");
+        	    i++;
+        	    if(transport != "DONE"){
+                    doReindex();
+                }
+    	    }
+	    });
+    }
+    doReindex();
+//]]>
+</script>
+<ul id="output">
+</ul>

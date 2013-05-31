@@ -45,10 +45,16 @@ class PaperRoll_View_Helper_Cache {
 			'cache_dir' => $this->_getCacheDir()
 		);
 		$cache = Zend_Cache::factory('Page', 'File', $front, $back);
-		if(false && APPLICATION_ENV != 'production') {
+		if(APPLICATION_ENV != 'production') {
 			$cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 		}
 		return $cache;
+	}
+	
+	public function flushCache()
+	{
+    	$this->getCache()->clean(Zend_Cache::CLEANING_MODE_ALL);
+    	$this->getPageCache()->clean(Zend_Cache::CLEANING_MODE_ALL);
 	}
 
 }

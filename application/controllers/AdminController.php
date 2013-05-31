@@ -94,6 +94,33 @@ class AdminController extends Zend_Controller_Action
 		}
         return $this->_helper->redirector->gotoSimple('index', 'admin');
 	}
+	
+	public function reindeximagesAction()
+	{
+		$data = $this->getRequest()->getPost();
+		if($data){
+            $this->_helper->layout()->disableLayout(); 
+            $this->_helper->viewRenderer->setNoRender(true);
+            $offset = $data["i"];
+            $entry = new PaperRoll_Model_Entry();
+    		$db = $entry->getResource();
+    		$entry = $db->fetchAll($db->select()->order('published_at desc')->limit(1, $offset));
+    		if(count($entry)){
+        		$entry = $entry->current();
+        		$image = new PaperRoll_Model_Image();
+        		$insert = $image->reindexImages($entry->id);
+        		echo $entry->title . " - " . implode(",", $insert);
+            } else {
+                echo "DONE";
+            }
+		}
+	}
+	
+	public function flushcacheAction()
+	{
+    	Paper::helper('Cache')->flushCache();
+        return $this->_helper->redirector->gotoSimple('index', 'admin');
+	}
 
 	public function getAuthAdapter(array $params)
 	{

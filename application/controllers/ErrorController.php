@@ -14,7 +14,7 @@ class ErrorController extends Zend_Controller_Action
         
         $rewrite = $this->fetchRewrite($this->getRequest()->getRequestUri());
         if($rewrite){
-        	$this->_forward($rewrite['action'], $rewrite['controller'], $rewrite['module'], $rewrite['params']);
+        	return $this->_forward($rewrite['action'], $rewrite['controller'], $rewrite['module'], $rewrite['params']);
         }
         
         switch ($errors->type) {
@@ -34,9 +34,7 @@ class ErrorController extends Zend_Controller_Action
         }
         
         // Log exception, if logger available
-        if ($log = $this->getLog()) {
-            $log->crit($this->view->message, $errors->exception);
-        }
+        Paper::log($errors->exception->getMessage(), $errors->exception->getTraceAsString());
         
         // conditionally display exceptions
         if ($this->getInvokeArg('displayExceptions') == true) {

@@ -36,6 +36,7 @@ class PaperRoll_Model_Tag extends PaperRoll_Model_Core_Object {
 			$slug = trim($slug);
 			if($slug == '') continue;
 			$tag = $this->loadBySlug($slug);
+			Paper::log("$slug - ".$tag->getId());
 			$db = new Zend_Db_Table('entry_tag');
 			$select = $db->select()
 				->where('tag_id = ?', $tag->getId())
@@ -66,6 +67,7 @@ class PaperRoll_Model_Tag extends PaperRoll_Model_Core_Object {
 		if($result['id']){
 			return $this->load($result['id']);
 		} else {
+		    $this->setId(null);
 			$this->setData('slug', $slug);
 			$this->setData('title', ucwords(preg_replace("#(-|_)#", " ", $slug)));
 			$this->load($this->save());

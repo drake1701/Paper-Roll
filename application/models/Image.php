@@ -8,7 +8,7 @@
 class PaperRoll_Model_Image extends PaperRoll_Model_Core_Object
 {
 
-	protected $_url = "http://spartacuswallpaper.com/public/gallery/";
+	protected $_url = "/public/gallery/";
 
 	public function getEntryImages($id)
 	{
@@ -30,25 +30,34 @@ class PaperRoll_Model_Image extends PaperRoll_Model_Core_Object
 	{
 		$db = $this->getResource();
 		$entry = new PaperRoll_Model_Entry();
+		$inserts = array();
 		$entry->load($id);
-		if(($file = $entry->getData('filename')) === false){
+		$file = $entry->getData('filename');
+		if($file == ""){
 			$file = $db->fetchAll($db->select()->where('entry_id = ?', $id)->limit(1))->toArray();
+			if(count($file) == 0){
+    			throw new Zend_Exception("No filename found.");
+			}
 			$file = array_pop($file);
 			if(isset($file['path'])){
 				$entry->setData('filename', $file['path']);
 				$entry->save();
 			}
-		}
+		}		
 		$files = glob(APPLICATION_PATH."/../public/gallery/*/".$file);
 		$images = $this->getEntryImages($id);
 		if(count($files) == count($images)){
-			return true;
+			return $inserts;
 		} else {
 			foreach($files as $k => $v){
-				$files[$k] = str_replace(APPLICATION_PATH."/..", "", $v);
+			    $kind = dirname($v);
+			    $kind = array_pop(explode("/", $kind));
+			    unset($files[$k]);
+				$files[$kind] = str_replace(APPLICATION_PATH."/..", "", $v);
 			}
 			foreach($images as $k => $v){
-				$images[$k] = $v->getUrl();
+			    $kind = $v->getKind();
+				$images[$kind->getPath()] = $this->_url . $kind->getPath() . "/" . $v->getPath();
 			}
 			$kinds = new PaperRoll_Model_ImageKind();
 			$kinds = $kinds->getKinds();
@@ -57,15 +66,17 @@ class PaperRoll_Model_Image extends PaperRoll_Model_Core_Object
 				$parts = explode("/", $new);
 				$kind = $parts[3];
 				if(isset($kinds[$kind])){
-					$db->insert(array(
+				    $data = array(
 						'entry_id' 	=> $id,
 						'path'		=> $file,
 						'kind'		=> $kinds[$kind]
-					));
+					);
+					$db->insert($data);
+					$inserts[] = $kind;
 				}
 			}
 		}
-		return false;
+		return $inserts;
 	}
 
 	public function load($id)
@@ -74,7 +85,7 @@ class PaperRoll_Model_Image extends PaperRoll_Model_Core_Object
 		$kind = new PaperRoll_Model_ImageKind();		
 		$kind = $kind->load($this->getKind());
 		$this->setKind($kind);
-		$this->setUrl($this->_url . $kind->getPath() . "/" . $this->getPath());
+		$this->setUrl(Paper::getBaseUrl() . $this->_url . $kind->getPath() . "/" . $this->getPath());
 		return $this;
 	}
 
