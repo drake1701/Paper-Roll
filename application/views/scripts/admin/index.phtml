@@ -9,9 +9,9 @@
 <ul>
 	<li><a href="<?php echo $this->url(array('controller' => "admin",'action' => "new")); ?>">Check for New</a></li>
 	<li><a href="<?php echo $this->url(array('controller' => "admin",'action' => "reindeximages")); ?>">Refresh Image Index</a></li>
-	<li><a href="<?php echo $this->url(array('controller' => "admin",'action' => "flushcache")); ?>">Flush Cache</a></li>
 </ul>
 <h2>Queued Entries</h2>
+<form action="<?php echo $this->url(array('controller' => "admin",'action' => "reorder")); ?>" method="post">
 <table>
 	<thead>
 		<tr>
@@ -21,10 +21,10 @@
 			<td>Actions</td>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody id="sortable">
 		<?php foreach ($this->queue as $entry) : ?>
 		<tr>
-			<td><?php echo $entry->getData('id') ?></td>
+			<td><input type="hidden" name="entry_id[<?php echo $entry->getData('queue') ?>][]" value="<?php echo $entry->getData('id') ?>" /><?php echo $entry->getData('id') ?></td>
 			<td><?php echo $entry->getData('title') ?></td>
 			<td><?php echo Paper::helper('Date')->format($entry->getData('published_at')) ?></td>
 			<td>
@@ -36,3 +36,11 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
+<button type="submit"><span>Save</span></button>
+</form>
+<script type="text/javascript">
+$(function() {
+  $( "#sortable" ).sortable();
+  $( "#sortable" ).disableSelection();
+});
+</script>

@@ -12,26 +12,32 @@ class PaperRoll_Model_Queue {
 		'2' => 'monthly-1'
 	);
 
-	public function getLastPublishDate($type){
+    public function getNext($date, $type){
+        if(is_string($date)){
+            $date = new DateTime($date);
+        }
+        switch($this->types[$type]){
+            case "m-th-sa":
+                $last_dow = $date->format("w");
+                if($last_dow == 1){
+                    $date->add(new DateInterval("P3D"));
+                } else {
+                    $date->add(new DateInterval("P2D"));
+                }
+                break;
+            case "monthly-1":
+                $month = $date->format("m");
+                $last = new DateTime($date->format("Y-".($month+1)."-1 00:00:00"));
+                break;
+            default:
+                break;
+        }
+        return $date->format("Y-m-d 00:00:00");
+    }
+
+	public function getLastQueuedDate($type){
 		$last = new DateTime($this->getLastDate($type));
-		switch($this->types[$type]){
-			case "m-th-sa":
-				$last_dow = $last->format("w");
-				if($last_dow == 1){
-					$last->add(new DateInterval("P3D"));
-				} else {
-					$last->add(new DateInterval("P2D"));
-				}
-				break;
-			case "monthly-1":
-				$month = $last->format("m");
-				$last = new DateTime($last->format("Y-".($month+1)."-1 00:00:00"));
-				break;
-			default:
-				$next = '';
-				break;
-		}
-		return $last->format("Y-m-d 00:00:00");
+        return $this->getNext($last, $type);
 	}
 
 	public function getLastDate($type) {
@@ -43,6 +49,16 @@ class PaperRoll_Model_Queue {
 			->limit(1));
 		return $result->published_at;
 	}
+
+    public function getLastPublishedDate() {
+        $entry = new PaperRoll_Model_Entry();
+      		$db = $entry->getResource();
+      		$result = $db->fetchRow($db->select()
+      			->where("queue IS NULL")
+      			->order('published_at DESC')
+      			->limit(1));
+      	return $result->published_at;
+    }
 
 	public function getNextQueueEntry() {
 		$entry = new PaperRoll_Model_Entry();
@@ -65,5 +81,18 @@ class PaperRoll_Model_Queue {
 			Paper::log($entry->getData('title'));
 		}
 	}
+
+    public function reorder(Array $ids, $type) {
+        $last = $this->getLastPublishedDate();
+        $next = $this->getNext($last, $type);
+        foreach($ids as $id){
+            $entry = new PaperRoll_Model_Entry();
+            $entry->load($id);
+            if($entry->getData('published_at') != $next){
+                $entry->setData('published_at', $next)->save();
+            }
+            $next = $this->getNext($next, $type);
+        }
+    }
 
 }

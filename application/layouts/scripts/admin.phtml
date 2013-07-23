@@ -1,0 +1,63 @@
+<?php
+/**
+ * @package		PaperRoll
+ * @author		Dennis Rogers
+ * @address		www.drogers.net
+ */
+?>
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Spartacus Wallpaper Admin</title>
+    <?php echo $this->headLink()->appendStylesheet('/public/css/global.css') ?>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+</head>
+<body>
+	<div class="wrapper-outer">
+		<div class="header-banner<?php echo Paper::helper('Date')->getBannerImage()?>">
+			<div class="logo">
+				<a href="/"><img src="/public/images/logo.png" alt="Spartacus Wallpaper" /></a>
+				<ul class="top-nav">
+					<li><a href="/page/about">about</a></li>
+					<li><a href="/page/tags">tags</a></li>
+					<li><a href="/page/contact">contact</a></li>
+					<li><a href="/page/donate">donate</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="wrapper-inner">
+			<div class="sidebar">
+				<div class="sidebar-head"></div>
+				<p class="section-head">Wallpapers:</p>
+				<ul>
+				<?php $kinds = new PaperRoll_Model_ImageKind(); ?>
+				<?php foreach ($kinds->getTagLinks() as $kind) : ?>
+					<li><a href="/tag/<?php echo $kind->getData('path') ?>"><?php echo $kind->getData('label') ?></a></li>
+				<?php endforeach; ?>
+				</ul>
+				<p class="section-head">Archive by Year:</p>
+				<ul class="years">
+				<?php $tag = new PaperRoll_Model_Tag(); ?>
+				<?php foreach ($tag->getYears() as $year) : ?>
+					<li><a href="/tag/<?php echo $year ?>"><?php echo $year ?></a></li>
+				<?php endforeach; ?>
+				</ul>
+				<p class="section-head">Top 20:</p>
+				<ul>
+				<?php foreach ($tag->getTop(20) as $tag) : ?>
+					<li><a href="/tag/<?php echo $tag->getData('slug') ?>"><?php echo $tag->getData('title') ?></a></li>
+				<?php endforeach; ?>
+				</ul>
+			</div>
+			<div class="content">
+				<?php echo $this->layout()->content ?>
+			</div>
+		</div>
+	</div>
+	<div id="copy">
+		<p>Site design &copy;<?php echo date("Y") ?> by Spartacus Wallpaper.</p>
+	</div>
+	</body>
+</html>

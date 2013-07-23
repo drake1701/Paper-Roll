@@ -28,7 +28,7 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 		$this->load(parent::save());
 		if($this->getData('queue') != '' && $this->getData('published_at') == ''){
 			$queue = new PaperRoll_Model_Queue();
-			$this->setData('published_at', $queue->getLastPublishDate($this->getData('queue')));
+			$this->setData('published_at', $queue->getLastQueuedDate($this->getData('queue')));
 			$this->save();
 		}
 		$this->reindexImages();

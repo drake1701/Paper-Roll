@@ -17,6 +17,7 @@ class AdminController extends Zend_Controller_Action
                 $this->_helper->redirector('login');
             }
         }
+        $this->_helper->layout->setLayout('admin');
     }
      
     public function loginAction()
@@ -64,8 +65,6 @@ class AdminController extends Zend_Controller_Action
 
 	public function saveAction()
 	{
-		try{
-			
 		$data = $this->getRequest()->getPost();
 		$entry = new PaperRoll_Model_Entry();
 		if(isset($data['id']))
@@ -77,10 +76,6 @@ class AdminController extends Zend_Controller_Action
 			$slugs = explode(",", $data['tags']);
 			$tag = new PaperRoll_Model_Tag();
 			$tag->checkLinks($entry->getId(), $slugs);
-		}
-		} Catch (Exception $e) {
-			Paper::log($e->getMessage());
-			Paper::log($e->getTraceAsString());
 		}
         return $this->_helper->redirector->gotoSimple('index', 'admin');
 	}
@@ -94,33 +89,15 @@ class AdminController extends Zend_Controller_Action
 		}
         return $this->_helper->redirector->gotoSimple('index', 'admin');
 	}
-	
-	public function reindeximagesAction()
-	{
-		$data = $this->getRequest()->getPost();
-		if($data){
-            $this->_helper->layout()->disableLayout(); 
-            $this->_helper->viewRenderer->setNoRender(true);
-            $offset = $data["i"];
-            $entry = new PaperRoll_Model_Entry();
-    		$db = $entry->getResource();
-    		$entry = $db->fetchAll($db->select()->order('published_at desc')->limit(1, $offset));
-    		if(count($entry)){
-        		$entry = $entry->current();
-        		$image = new PaperRoll_Model_Image();
-        		$insert = $image->reindexImages($entry->id);
-        		echo $entry->title . " - " . implode(",", $insert);
-            } else {
-                echo "DONE";
-            }
-		}
-	}
-	
-	public function flushcacheAction()
-	{
-    	Paper::helper('Cache')->flushCache();
+
+    public function reorderAction()
+    {
+        $queue = new PaperRoll_Model_Queue();
+        foreach($this->getRequest()->getParam('entry_id') as $type => $ids){
+            $queue->reorder($ids, $type);
+        }
         return $this->_helper->redirector->gotoSimple('index', 'admin');
-	}
+    }
 
 	public function getAuthAdapter(array $params)
 	{
