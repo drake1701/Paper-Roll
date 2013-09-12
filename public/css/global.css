@@ -95,6 +95,12 @@ width:340px;
 
 .social-media {
 	float:right;
+    width:230px;
+}
+
+.fb-like,.twitter,.pinterest,.tapiture {
+    float:left;
+    width:110px;
 }
 
 .sidebar {
@@ -171,7 +177,6 @@ padding:2px 0 12px 5px;
 	float:left;
 	width: 200px;
 	padding: 15px;
-	overflow: hidden;
 }
 
 .entry-grid .entry-title {
