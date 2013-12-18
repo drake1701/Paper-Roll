@@ -181,7 +181,13 @@ padding:2px 0 12px 5px;
 
 .entry-grid .entry-title {
 	font-size:14px;
-	white-space: nowrap;
+    height: 32px;
+    display: table;
+}
+
+.entry-grid .entry-title a {
+    display: table-cell;
+    vertical-align: bottom;
 }
 
 .entry-grid .entry-date {
