@@ -48,9 +48,14 @@ $form = new Zend_Form(array(
 		'label'      => 'url path:',
 	));
 
+    $form->addElement('checkbox', 'view_queue', array(
+        'required'   => true,
+        'label'      => 'view queue:',
+    ));
+
 	$form->addElement('hidden', 'filename', array());
 
-	$login = $form->addElement('submit', 'save', array(
+	$save = $form->addElement('submit', 'save', array(
 		'required' => false,
 		'ignore'   => true,
 		'label'    => 'save',
@@ -84,7 +89,9 @@ if($this->entry){
 }
 ?>
 <?php if (isset($image)) : ?>
-	<img style="float:right" src="<?php echo $image ?>" />
+    <a href="#" onclick="window.open('<?php echo "/public/gallery/widescreen/".$this->image ?>', '','toolbar=no, scrollbars=yes, resizable=yes, top=10, left=10, width=960, height=600');">
+	    <img style="float:right" src="<?php echo $image ?>" />
+    </a>
 <?php endif; ?>
 <?php echo $form; ?>
 <a href="<?php echo $this->url(array('controller'=>'admin','action'=>'index'), 'default', true) ?>" title="logout">&lt; back</a>

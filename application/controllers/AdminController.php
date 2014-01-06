@@ -77,7 +77,12 @@ class AdminController extends Zend_Controller_Action
 			$tag = new PaperRoll_Model_Tag();
 			$tag->checkLinks($entry->getId(), $slugs);
 		}
-        return $this->_helper->redirector->gotoSimple('index', 'admin');
+        if($data['view_queue']){
+            $redirect = "index";
+        } else {
+            $redirect = "new";
+        }
+        return $this->_helper->redirector->gotoSimple($redirect, 'admin');
 	}
 
 	public function deleteAction()

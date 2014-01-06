@@ -16,7 +16,7 @@ class PaperRoll_Model_Entry_Mapper extends PaperRoll_Model_Core_Mapper
 
 	public function getVisible()
 	{
-		$resultSet = $this->getDbTable()->fetchAll($this->getDbTable()->select()->where("`queue` IS NULL"));
+		$resultSet = $this->getDbTable()->fetchAll($this->getDbTable()->select()->where("`published` IS NOT NULL"));
 		return $this->loadEach($resultSet);
 	}
 
@@ -24,7 +24,7 @@ class PaperRoll_Model_Entry_Mapper extends PaperRoll_Model_Core_Mapper
 	{
 		$resultSet = $this->getDbTable()->fetchAll(
 			$this->getDbTable()->select()
-				->where("queue IS NULL")
+				->where("`published` IS NOT NULL")
 				->order("published_at DESC")
 				->limit($count)
 		);

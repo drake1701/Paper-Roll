@@ -81,7 +81,7 @@ class PaperRoll_Model_Entry extends PaperRoll_Model_Core_Object
 	public function getQueue($type = false)
 	{
 		$db = $this->getResource();
-		$queued_entries = $db->fetchAll($db->select()->where("queue IS NOT NULL")->order('published_at asc'));
+		$queued_entries = $db->fetchAll($db->select()->where("`published` IS NULL")->order('published_at asc'));
 		return $this->getMapper()->loadEach($queued_entries);
 	}
 

@@ -26,8 +26,7 @@ class PaperRoll_Model_Queue {
                 }
                 break;
             case "monthly-1":
-                $month = $date->format("m");
-                $last = new DateTime($date->format("Y-".($month+1)."-1 00:00:00"));
+                $date->add(new DateInterval("P1M"));
                 break;
             default:
                 break;
@@ -44,7 +43,7 @@ class PaperRoll_Model_Queue {
 		$entry = new PaperRoll_Model_Entry();
 		$db = $entry->getResource();
 		$result = $db->fetchRow($db->select()
-			->where("queue IS NULL OR queue = ?", $type)
+			->where("queue = ?", $type)
 			->order('published_at DESC')
 			->limit(1));
 		return $result->published_at;
@@ -76,7 +75,7 @@ class PaperRoll_Model_Queue {
 
 	public function popQueue() {
 		while($entry = $this->getNextQueueEntry()){
-			$entry->setData('queue', new Zend_Db_Expr('NULL'));
+			$entry->setData('published', 1);
 			$entry->save();
 			Paper::log($entry->getData('title'));
 		}

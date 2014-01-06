@@ -10,7 +10,11 @@ $i = 0;
 $totalEntries = count($this->images);
 $columnCount = 3;
 
+$queue = new PaperRoll_Model_Queue();
+$dateHelper = new PaperRoll_View_Helper_Date();
  ?>
+<p>Normal Queue: <?php echo $dateHelper->format($queue->getLastQueuedDate(1)) ?></p>
+<p>Calendar Queue: <?php echo $dateHelper->format($queue->getLastQueuedDate(2), "short") ?></p>
 <?php foreach ($this->images as $image) : ?>
 		<?php if ($i % $columnCount == 0) : ?>
 			<ul class="entry-grid">
