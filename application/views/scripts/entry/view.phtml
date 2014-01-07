@@ -27,19 +27,13 @@ foreach ($entry->getImages() as $image) : ?>
 */ ?>
 	<p class="entry-content"><?php echo $entry->getContent() ?></p>
 	<div class="social-media">
-		<div class="fb-like"><fb:like href="http://spartacuswallpaper.com/<?php echo $entry->getUrlPath() ?>" width="450" colorscheme="dark" layout="button_count" show_faces="false"></fb:like></div>
-		<div class="twitter">
-			<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://spartacuswallpaper.com/<?php echo $entry->getUrlPath() ?>" data-text="<?php echo $entry->getTitle() ?>" data-via="spartacuswalls">Tweet</a>
-			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-		</div>
-		<div class="pinterest">
-			<a href="http://pinterest.com/pin/create/button/?url=<?php echo $entry->getUrlPath() ?>&media=<?php echo $entry->getImageUrl('preview') ?>&description=<?php echo $entry->getTitle() ?>" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
-			<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
-		</div>
-        <div class="tapiture">
-            <div class="tapiture_tapit_button"></div>
-            <script type="text/javascript" src="//static.tapcdn.com/mosaic/tap_button.js"></script>
-        </div>
+        <?php $shareUrl = "http://spartacuswallpaper.com/" . $entry->getUrlPath(); ?>
+        <ul>
+            <li><a class="facebook" href="http://www.facebook.com/share.php?u=<?php echo $shareUrl ?>&title=<?php echo $entry->getTitle() ?>">Share</a></li>
+            <li><a class="tapiture" href="http://tapiture.com/bookmarklet/image?img_src=<?php echo $entry->getImageUrl('preview') ?>&page_url=<?php echo $shareUrl ?>&page_title=<?php echo $entry->getTitle() ?>&img_title=<?php echo $entry->getTitle() ?>&img_width=724img_height=453">Tap</a></li>
+            <li><a class="twitter" href="http://twitter.com/home?status=<?php echo $entry->getTitle() ?>: <?php echo $shareUrl ?> #wallpaper #background">Tweet</a></li>
+            <li><a class="pinterest" href="http://pinterest.com/pin/create/bookmarklet/?media=<?php echo $entry->getImageUrl('preview') ?>&url=<?php echo $shareUrl ?>&is_video=false&description=<?php echo $entry->getTitle() ?>">Pin</a></li>
+        </ul>
 	</div>
 	<div class="entry-versions">
 		<h4>Versions</h4>

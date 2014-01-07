@@ -47,7 +47,8 @@ margin:0;
 }
 
 .entry-versions,
-.entry-tags {
+.entry-tags,
+.social-media {
 	font-size:14px;
     float: left;
     width: 200px;
@@ -98,10 +99,21 @@ width:340px;
     width:230px;
 }
 
-.fb-like,.twitter,.pinterest,.tapiture {
+.social-media li {
     float:left;
-    width:110px;
 }
+.social-media li a {
+    display: block;
+    background: url(../images/social-media-icons-small.png) 0 0 no-repeat;
+    width:110px;
+    height:24px;
+    margin-bottom:3px;
+    line-height: 26px;
+    text-indent:28px;
+}
+.social-media li a.twitter { background-position: 0 -24px; }
+.social-media li a.tapiture { background-position: 0 -48px; }
+.social-media li a.pinterest { background-position: 0 -72px; }
 
 .sidebar {
 	background: #2f3519;
@@ -112,15 +124,32 @@ width:340px;
 	background: -ms-linear-gradient(top,  #2f3519 5%,#121603 60%);
 	background: linear-gradient(top,  #2f3519 5%,#121603 60%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2f3519', endColorstr='#121603',GradientType=0 );
-
-position: relative;
-color:#949A72;
-float:right;
-font-family:Helvetica;
-margin:15px 15px 15px 0;
-padding:35px 8px 8px;
-width:144px;
+    position: relative;
+    color:#949A72;
+    float:right;
+    font-family:Helvetica;
+    margin:15px 15px 15px 0;
+    padding:35px 8px 8px;
+    width:144px;
 }
+
+.sidebar .social-contact li {
+    display: block;
+    text-indent: -9999px;
+    float:left;
+    height: 32px;
+    width: 32px;
+    margin: 0 4px 10px -2px;
+}
+.sidebar .social-contact li a {
+    display: block;
+    height: 32px;
+    width: 32px;
+    background: url(../images/social-media-icons.png) 0 0 no-repeat;
+}
+.sidebar .social-contact li.twitter a { background-position: 0 -32px; }
+.sidebar .social-contact li.tapiture a { background-position: 0 -64px; }
+.sidebar .social-contact li.pinterest a { background-position: 0 -96px; }
 
 .sidebar-head,
 .content-head {

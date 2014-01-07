@@ -19,12 +19,10 @@
 		<div class="header-banner<?php echo Paper::helper('Date')->getBannerImage()?>">
 			<div class="logo">
 				<a href="/"><img src="/public/images/logo.png" alt="Spartacus Wallpaper" /></a>
-				<ul class="top-nav">
-					<li><a href="/page/about">about</a></li>
-					<li><a href="/page/tags">tags</a></li>
-					<li><a href="/page/contact">contact</a></li>
-					<li><a href="/page/donate">donate</a></li>
-				</ul>
+                <ul class="top-nav">
+                    <li><a href="<?php echo $this->url(array('controller' => "admin",'action' => "index")); ?>">Queue</a></li>
+                	<li><a href="<?php echo $this->url(array('controller' => "admin",'action' => "new")); ?>">New</a></li>
+                </ul>
 			</div>
 		</div>
 		<div class="wrapper-inner">
