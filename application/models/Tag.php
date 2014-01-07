@@ -121,7 +121,7 @@ class PaperRoll_Model_Tag extends PaperRoll_Model_Core_Object {
 				->setIntegrityCheck(false)
 				->from("tag")
 				->join(array("m" => "entry_tag"), "m.tag_id = tag.id", null)
-				->join(array("e" => new Zend_Db_Expr("(SELECT DISTINCT id FROM `entry` WHERE `queue` IS NULL ORDER BY `published_at` DESC)")), "e.id = m.entry_id", array("entry_id" => "id"))
+				->join(array("e" => new Zend_Db_Expr("(SELECT DISTINCT id FROM `entry` WHERE `published` IS NOT NULL ORDER BY `published_at` DESC)")), "e.id = m.entry_id", array("entry_id" => "id"))
 				->columns(array("count" => "COUNT(*)"))
 				->order("tag.title")
 				->order("m.entry_id DESC")
@@ -144,7 +144,7 @@ class PaperRoll_Model_Tag extends PaperRoll_Model_Core_Object {
 			->join(array("m" => "entry_tag"), "m.entry_id = entry.id", null)
 			->join(array("t" => "tag"), "t.id = m.tag_id", null)
 			->where("t.slug = ?", $tag)
-			->where("entry.queue IS NULL")
+			->where("entry.published IS NOT NULL")
 			->order("entry.published_at DESC")
 		);
 		if($entries->count() == 0){
@@ -152,7 +152,7 @@ class PaperRoll_Model_Tag extends PaperRoll_Model_Core_Object {
 			if(is_numeric($tag) && $tag != "1080"){
 				$entries = $db->fetchAll($db->select()
 					->from("entry")
-					->where("entry.queue IS NULL")
+					->where("entry.published IS NOT NULL")
 					->where("entry.published_at >= ?", "$tag-01-01 00:00:00")
 					->where("entry.published_at <= ?", "$tag-12-31 23:59:59")
 					->order("entry.published_at DESC")
@@ -167,7 +167,7 @@ class PaperRoll_Model_Tag extends PaperRoll_Model_Core_Object {
 						->join(array("i" => "image"), "i.entry_id = entry.id", null)
 						->join(array("k" => "image_kind"), "i.kind = k.id", null)
 						->where("k.id = ?", $kindId)
-						->where("entry.queue IS NULL")
+						->where("entry.published IS NOT NULL")
 						->order("entry.published_at DESC")
 					);
 				}
