@@ -28,11 +28,12 @@ foreach ($entry->getImages() as $image) : ?>
 	<p class="entry-content"><?php echo $entry->getContent() ?></p>
 	<div class="social-media">
         <?php $shareUrl = "http://spartacuswallpaper.com/" . $entry->getUrlPath(); ?>
+        <?php $title = urlencode($entry->getTitle()); ?>
         <ul>
-            <li><a class="facebook" href="http://www.facebook.com/share.php?u=<?php echo $shareUrl ?>&title=<?php echo $entry->getTitle() ?>">Share</a></li>
-            <li><a class="tapiture" href="http://tapiture.com/bookmarklet/image?img_src=<?php echo $entry->getImageUrl('preview') ?>&page_url=<?php echo $shareUrl ?>&page_title=<?php echo $entry->getTitle() ?>&img_title=<?php echo $entry->getTitle() ?>&img_width=724img_height=453">Tap</a></li>
-            <li><a class="twitter" href="http://twitter.com/home?status=<?php echo $entry->getTitle() ?>: <?php echo $shareUrl ?> #wallpaper #background">Tweet</a></li>
-            <li><a class="pinterest" href="http://pinterest.com/pin/create/bookmarklet/?media=<?php echo $entry->getImageUrl('preview') ?>&url=<?php echo $shareUrl ?>&is_video=false&description=<?php echo $entry->getTitle() ?>">Pin</a></li>
+            <li><a class="facebook" href="http://www.facebook.com/share.php?u=<?php echo $shareUrl ?>&title=<?php echo $title ?>">Share</a></li>
+            <li><a class="tapiture" href="http://tapiture.com/bookmarklet/image?img_src=<?php echo $entry->getImageUrl('preview') ?>&page_url=<?php echo $shareUrl ?>&page_title=<?php echo $title ?>&img_title=<?php echo $title ?>&img_width=724img_height=453">Tap</a></li>
+            <li><a class="twitter" href="http://twitter.com/intent/tweet?url=<?php echo $shareUrl ?>&text=<?php echo $title ?>+-+<?php echo $entry->getImageUrl('preview') ?>&hashtags=wallpaper,background">Tweet</a></li>
+            <li><a class="pinterest" href="http://pinterest.com/pin/create/bookmarklet/?media=<?php echo $entry->getImageUrl('preview') ?>&url=<?php echo $shareUrl ?>&is_video=false&description=<?php echo $title ?>">Pin</a></li>
         </ul>
 	</div>
 	<div class="entry-versions">
