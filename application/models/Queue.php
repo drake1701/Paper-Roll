@@ -53,7 +53,7 @@ class PaperRoll_Model_Queue {
         $entry = new PaperRoll_Model_Entry();
       		$db = $entry->getResource();
       		$result = $db->fetchRow($db->select()
-      			->where("queue IS NULL")
+      			->where("published IS NOT NULL")
       			->order('published_at DESC')
       			->limit(1));
       	return $result->published_at;
@@ -63,7 +63,7 @@ class PaperRoll_Model_Queue {
 		$entry = new PaperRoll_Model_Entry();
 		$db = $entry->getResource();
 		$result = $db->fetchRow($db->select()
-			->where("queue IS NOT NULL")
+			->where("published IS NULL")
 			->where("published_at < NOW()")
 			->order('published_at ASC')
 			->limit(1));
