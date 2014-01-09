@@ -24,3 +24,6 @@ $application = new Zend_Application(
 $application->bootstrap();
 $queue = new PaperRoll_Model_Queue();
 $queue->popQueue();
+Paper::helper('Cache')->flushCache();
+$ch = curl_init("http://spartacuswallpaper.com/page/tags");
+curl_exec($ch);
