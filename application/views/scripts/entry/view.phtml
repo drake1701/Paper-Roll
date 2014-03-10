@@ -31,7 +31,7 @@ foreach ($entry->getImages() as $image) : ?>
         <?php $title = urlencode($entry->getTitle()); ?>
         <ul>
             <li><a class="facebook" href="http://www.facebook.com/share.php?u=<?php echo $shareUrl ?>&title=<?php echo $title ?>">Share</a></li>
-            <li><a class="tapiture" href="http://tapiture.com/bookmarklet/image?img_src=<?php echo $entry->getImageUrl('preview') ?>&page_url=<?php echo $shareUrl ?>&page_title=<?php echo $title ?>&img_title=<?php echo $title ?>&img_width=724img_height=453">Tap</a></li>
+            <li><a class="tapiture" href="http://tapiture.com/widget/tap?url=<?php echo urlencode($entry->getImageUrl('preview')) ?>&page_url=<?php echo urlencode($shareUrl) ?>&page_title=<?php echo $title ?>&img_title=<?php echo $title ?>&img_width=724img_height=453">Tap</a></li>
             <li><a class="twitter" href="http://twitter.com/intent/tweet?url=<?php echo $shareUrl ?>&text=<?php echo $title ?>+-+<?php echo $entry->getImageUrl('preview') ?>&hashtags=wallpaper,background">Tweet</a></li>
             <li><a class="pinterest" href="http://pinterest.com/pin/create/bookmarklet/?media=<?php echo $entry->getImageUrl('preview') ?>&url=<?php echo $shareUrl ?>&is_video=false&description=<?php echo $title ?>">Pin</a></li>
         </ul>
