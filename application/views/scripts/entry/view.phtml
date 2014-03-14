@@ -31,9 +31,9 @@ foreach ($entry->getImages() as $image) : ?>
         <?php $title = urlencode($entry->getTitle()); ?>
         <ul>
             <li><a class="facebook" href="http://www.facebook.com/share.php?u=<?php echo $shareUrl ?>&title=<?php echo $title ?>">Share</a></li>
-            <li><a class="tapiture" href="http://tapiture.com/widget/tap?url=<?php echo urlencode($entry->getImageUrl('preview')) ?>&page_url=<?php echo urlencode($shareUrl) ?>&page_title=<?php echo $title ?>&img_title=<?php echo $title ?>&img_width=724img_height=453">Tap</a></li>
             <li><a class="twitter" href="http://twitter.com/intent/tweet?url=<?php echo $shareUrl ?>&text=<?php echo $title ?>+-+<?php echo $entry->getImageUrl('preview') ?>&hashtags=wallpaper,background">Tweet</a></li>
             <li><a class="pinterest" href="http://pinterest.com/pin/create/bookmarklet/?media=<?php echo $entry->getImageUrl('preview') ?>&url=<?php echo $shareUrl ?>&is_video=false&description=<?php echo $title ?>">Pin</a></li>
+            <li><a class="tapiture" href="javascript:if(!document.getElementById('jquery_js'))%20%7Bvoid((function()%20%7Bvar%20e%20=%20document.createElement('script');e.setAttribute('id',%20'jquery_js');e.setAttribute('type',%20'text/javascript');e.setAttribute('charset',%20'UTF-8');var%20eSrc%20=%20(location.protocol%20==%20'https:'%20?%20'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'%20:%20'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');e.setAttribute('src',%20eSrc);document.body.appendChild(e);e%20=%20document.createElement('script');e.setAttribute('id',%20'tapiture_js');e.setAttribute('type',%20'text/javascript');e.setAttribute('charset',%20'UTF-8');eSrc%20=%20(location.protocol%20==%20'https:'%20?%20'https://tapiture.com/assets/js/tap_browser.js?ver='%20+%20Math.random()%20:%20'http://tapiture.com/assets/js/tap_browser.js?ver='%20+%20Math.random());e.setAttribute('src',%20eSrc);document.body.appendChild(e)%7D)())%7D;">Tap</a></li>
         </ul>
 	</div>
 	<div class="entry-versions">
