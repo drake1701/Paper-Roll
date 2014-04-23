@@ -49,11 +49,12 @@ class PaperRoll_Model_Queue {
 		return $result->published_at;
 	}
 
-    public function getLastPublishedDate() {
+    public function getLastPublishedDate($type) {
         $entry = new PaperRoll_Model_Entry();
       		$db = $entry->getResource();
       		$result = $db->fetchRow($db->select()
       			->where("published IS NOT NULL")
+      			->where("queue = ?", $type)
       			->order('published_at DESC')
       			->limit(1));
       	return $result->published_at;
@@ -82,8 +83,9 @@ class PaperRoll_Model_Queue {
 	}
 
     public function reorder(Array $ids, $type) {
-        $last = $this->getLastPublishedDate();
+        $last = $this->getLastPublishedDate($type);
         $next = $this->getNext($last, $type);
+        
         foreach($ids as $id){
             $entry = new PaperRoll_Model_Entry();
             $entry->load($id);
