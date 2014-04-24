@@ -12,6 +12,7 @@
   <title><?php echo $this->title ?>Desktop Backgrounds | Spartacus Wallpaper</title>
   <?php if($this->canonical): ?><link rel="canonical" href="<?php echo $this->canonical ?>" /><?php endif; ?>
   <?php echo $this->headLink()->appendStylesheet(Paper::getBaseUrl().'/public/css/global.css') ?>
+  <?php echo $this->head; ?>
 </head>
 <body>
 	<div class="wrapper-outer">

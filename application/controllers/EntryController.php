@@ -28,5 +28,15 @@ class EntryController extends Zend_Controller_Action
     	$this->view->canonical = Paper::getBaseUrl() . "/" .$entry->getUrlPath();
     	$this->view->title = $entry->getData('title')." | ";
     	$this->view->entry = $entry;
+    	
+    	$head = '
+    	<meta name="twitter:card" content="photo">
+        <meta name="twitter:site" content="@spartacuswalls">
+        <meta name="twitter:creator" content="@spartacuswalls">
+        <meta name="twitter:title" content="'.$entry->getData('title').'">
+        <meta name="twitter:description" content="'.$entry->getData("description").'">
+        <meta name="twitter:image:src" content="'.$entry->getImageUrl('preview').'">
+        ';
+        $this->view->head = $head;
     }
 }
