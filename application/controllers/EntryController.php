@@ -36,6 +36,14 @@ class EntryController extends Zend_Controller_Action
         <meta name="twitter:title" content="'.$entry->getData('title').'">
         <meta name="twitter:description" content="'.$entry->getData("description").'">
         <meta name="twitter:image:src" content="'.$entry->getImageUrl('preview').'">
+        
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="'.$entry->getData('title').'" />
+        <meta property="og:site_name" content="Spartacus Wallpaper"/>
+        <meta property="og:url" content="'.Paper::getBaseUrl() . "/" .$entry->getUrlPath().'" />
+        <meta property="og:description" content="'.$entry->getData("description").'" />
+        <meta property="og:image" content="'.$entry->getImageUrl('preview').'" />
+        <meta property="og:updated_time" content="'.$entry->getData('published_at').'" />
         ';
         $this->view->head = $head;
     }
